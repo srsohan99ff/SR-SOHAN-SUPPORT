@@ -59,7 +59,7 @@
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
-        /* ভিডিওর মত গেটওয়ে মডাল */
+        /* গেটওয়ে মডাল */
         .modal {
             display: none; position: fixed; inset: 0; 
             background: rgba(2, 6, 23, 0.95); z-index: 100;
@@ -86,7 +86,7 @@
             transition: 0.2s;
         }
         
-        /* ড্রপডাউন অপশনগুলোর কালার ফিক্স */
+        /* ড্রপডাউন অপশন কালার */
         .custom-select option {
             background-color: #0f172a !important;
             color: #ffffff !important;
@@ -95,20 +95,13 @@
         .custom-select:focus { border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
         .custom-select:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        /* ভিডিওর মত ইনফো বক্স এবং টেক্সট */
         .info-tag {
             background: rgba(59, 130, 246, 0.15); color: #60a5fa;
             padding: 6px 12px; border-radius: 8px; font-weight: 600;
-            display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; margin-bottom: 12px;
+            display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; margin-bottom: 20px;
         }
 
-        .timer-box {
-            border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02);
-            padding: 10px; border-radius: 10px; text-align: center; font-weight: 600; color: #94a3b8; margin-bottom: 20px;
-        }
-        .timer-box span { color: #22c55e; font-weight: 700; }
-
-        /* ভিডিওর কপি সিস্টেম কার্ড লেআউট */
+        /* পেমেন্ট কার্ড লেআউট */
         .payment-details-card {
             background: #020617; border: 1px dashed var(--primary-blue);
             padding: 15px; border-radius: 14px; margin-top: 15px;
@@ -131,16 +124,24 @@
         }
         .inline-copy-btn:hover { opacity: 0.8; }
 
-        .qr-toggle-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
-            border-radius: 8px; padding: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-        }
-
+        /* কিউআর কোড বক্স প্রথমে রাখার জন্য সিএসএস */
         .qr-box {
-            margin: 15px auto 0; width: 150px; height: 150px;
+            margin: 5px auto 15px; width: 150px; height: 150px;
             background: white; padding: 8px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
         }
+
+        /* গ্লোয়িং ডার্ক লোডার */
+        .loader-container {
+            display: none; text-align: center; padding: 20px 0;
+        }
+        .custom-spinner {
+            width: 40px; height: 40px; border: 4px solid rgba(59, 130, 246, 0.1);
+            border-left-color: var(--primary-blue); border-radius: 50%;
+            animation: spin 1s linear infinite; margin: 0 auto 10px;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .swal2-toast-custom {
             background: #0f172a !important; border: 1px solid #3b82f6 !important; color: #ffffff !important;
@@ -184,15 +185,11 @@
         <div class="modal-content">
             <h2 class="step-title">ᏚR SOHAN PAY</h2>
             
-            <div style="text-align: center; margin-top: 5px;">
+            <div style="text-align: center;">
                 <div class="info-tag">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                     You pay network fee
                 </div>
-            </div>
-
-            <div class="timer-box">
-                Expires in <span id="countdown">30:00</span>
             </div>
             
             <label class="detail-label">Currency</label>
@@ -207,38 +204,26 @@
                 <option value="" disabled selected>Select network</option>
             </select>
 
+            <div id="loaderArea" class="loader-container">
+                <div class="custom-spinner"></div>
+                <p style="color: #60a5fa; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px;">GENERATING ADDRESS...</p>
+            </div>
+
             <div id="displayArea" style="display: none;">
                 <div class="payment-details-card">
                     
                     <div class="detail-row">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                            <div>
-                                <span class="detail-label">Recipient's wallet address</span>
-                            </div>
-                            <div class="qr-toggle-btn" onclick="toggleQR()">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                            </div>
-                        </div>
-                        <div class="copy-field" style="margin-top: 6px;">
-                            <span id="addrText" style="width: 75%;">LOADING...</span>
-                            <span class="inline-copy-btn" onclick="copyText('addrText')">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                                Copy
-                            </span>
-                        </div>
-                    </div>
-
-                    <div id="qrContainer" style="display: none;">
+                        <span class="detail-label" style="text-align: center; display: block; margin-bottom: 8px;">Scan QR Code to Pay</span>
                         <div class="qr-box">
                             <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
                         </div>
                     </div>
 
-                    <div class="detail-row" style="margin-top: 15px;">
-                        <span class="detail-label">Amount to send</span>
-                        <div class="copy-field">
-                            <span id="amountText" style="font-weight: 700; color: #fff;">10 USDT</span>
-                            <span class="inline-copy-btn" onclick="copyText('amountText')">
+                    <div class="detail-row" style="margin-top: 10px;">
+                        <span class="detail-label">Recipient's wallet address</span>
+                        <div class="copy-field" style="margin-top: 6px;">
+                            <span id="addrText" style="width: 75%;">LOADING...</span>
+                            <span class="inline-copy-btn" onclick="copyText('addrText')">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                                 Copy
                             </span>
@@ -250,7 +235,7 @@
             
             <div style="margin-top: 20px; display: flex; justify-content: space-between; gap: 10px;">
                 <button onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
-                <button onclick="closeWallet()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">Proceed</button>
+                <button id="proceedBtn" onclick="startLoadingProcess()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);" disabled>Proceed</button>
             </div>
         </div>
     </div>
@@ -259,25 +244,21 @@
         // ওয়ালেট ডেটাবেস
         const walletData = {
             USDT: [
-                { name: "TRON (TRC-20)", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK", amt: "10 USDT" },
-                { name: "BSC (BEP-20)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK", amt: "10 USDT" }
+                { name: "TRON (TRC-20)", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" },
+                { name: "BSC (BEP-20)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" }
             ],
             LTC: [
-                { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK", amt: "0.15 LTC" }
+                { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK" }
             ]
         };
-
-        let timerInterval;
 
         function openWallet() {
             document.getElementById('walletModal').style.display = 'flex';
             resetWalletModal();
-            startTimer(1800); // ৩০ মিনিটের কাউন্টডাউন টাইমার (১৮০০ সেকেন্ড)
         }
 
         function closeWallet() {
             document.getElementById('walletModal').style.display = 'none';
-            clearInterval(timerInterval);
         }
 
         function resetWalletModal() {
@@ -285,18 +266,19 @@
             const netDropdown = document.getElementById('networkDropdown');
             netDropdown.innerHTML = '<option value="" disabled selected>Select network</option>';
             netDropdown.disabled = true;
+            document.getElementById('proceedBtn').disabled = true;
+            document.getElementById('loaderArea').style.display = 'none';
             document.getElementById('displayArea').style.display = 'none';
-            document.getElementById('qrContainer').style.display = 'none';
         }
 
-        // কারেন্সি সিলেক্ট করলে নেটওয়ার্ক ড্রপডাউন আনলক হওয়ার মেইন ফিক্স
+        // কারেন্সি সিলেক্ট করলে নেটওয়ার্ক ড্রপডাউন একটিভ করার লজিক
         function onAssetChange() {
             const assetSelect = document.getElementById('assetDropdown');
             const asset = assetSelect.options[assetSelect.selectedIndex].value;
             const netDropdown = document.getElementById('networkDropdown');
             
             netDropdown.innerHTML = '<option value="" disabled selected>Select network</option>';
-            netDropdown.disabled = false; // ড্রপডাউন একটিভ হলো
+            netDropdown.disabled = false;
             
             if (walletData[asset]) {
                 walletData[asset].forEach((net, index) => {
@@ -307,30 +289,45 @@
                 });
             }
 
+            document.getElementById('proceedBtn').disabled = true;
             document.getElementById('displayArea').style.display = 'none';
         }
 
-        // নেটওয়ার্ক সিলেক্ট করার পর ডেটা বক্স ওপেন হওয়া
+        // নেটওয়ার্ক সিলেক্ট করার পর Proceed বাটন একটিভ করা (সরাসরি ডেটা শো করবে না)
         function onNetworkChange() {
-            const asset = document.getElementById('assetDropdown').value;
             const netDropdown = document.getElementById('networkDropdown');
             const selectedIndex = netDropdown.options[netDropdown.selectedIndex].value;
             
+            if(selectedIndex !== "") {
+                document.getElementById('proceedBtn').disabled = false; // Proceed বাটন আনলক হলো
+            }
+            document.getElementById('displayArea').style.display = 'none';
+        }
+
+        // প্রসিড করার পর ২.৫ সেকেন্ডের লোডিং প্রসেস
+        function startLoadingProcess() {
+            const asset = document.getElementById('assetDropdown').value;
+            const selectedIndex = document.getElementById('networkDropdown').value;
+            
             if(selectedIndex === "") return;
+            
+            // প্রথমে পেমেন্ট এরিয়া হাইড করে লোডার অন করা
+            document.getElementById('displayArea').style.display = 'none';
+            document.getElementById('loaderArea').style.display = 'block';
+            document.getElementById('proceedBtn').disabled = true;
             
             const netInfo = walletData[asset][selectedIndex];
             
+            // ডেটাগুলো ব্যাকগ্রাউন্ডে সেট করে রাখা
             document.getElementById('addrText').innerText = netInfo.address;
             document.getElementById('qrImage').src = netInfo.qr;
-            document.getElementById('amountText').innerText = netInfo.amt;
             
-            document.getElementById('displayArea').style.display = 'block';
-        }
-
-        // কিউআর কোড বক্স টগল (ভিডিওর মত আইকনে ক্লিক করলে খুলবে)
-        function toggleQR() {
-            const qrBox = document.getElementById('qrContainer');
-            qrBox.style.display = qrBox.style.display === 'none' ? 'block' : 'none';
+            // ২.৫ সেকেন্ড (২৫০০ মিলি-সেকেন্ড) পর লোডার বন্ধ হয়ে মেইন কিউআর এবং অ্যাড্রেস শো করবে
+            setTimeout(function() {
+                document.getElementById('loaderArea').style.display = 'none';
+                document.getElementById('displayArea').style.display = 'block';
+                document.getElementById('proceedBtn').disabled = false;
+            }, 2500);
         }
 
         // কপি সিস্টেম ফাংশন
@@ -348,28 +345,6 @@
                 timerProgressBar: true,
                 customClass: { popup: 'swal2-toast-custom' }
             });
-        }
-
-        // কাউন্টডাউন টাইমার ফাংশন
-        function startTimer(duration) {
-            clearInterval(timerInterval);
-            let timer = duration, minutes, seconds;
-            const display = document.getElementById('countdown');
-            
-            timerInterval = setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    clearInterval(timerInterval);
-                    display.textContent = "Expired";
-                }
-            }, 1000);
         }
     </script>
 </body>
