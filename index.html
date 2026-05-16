@@ -66,7 +66,7 @@
         }
 
         .modal-content {
-            background: #0f172a; width: 90%; max-width: 320px;
+            background: #0f172a; width: 90%; max-width: 340px;
             padding: 25px; border-radius: 20px; border: 1px solid var(--primary-blue);
             text-align: center;
         }
@@ -82,6 +82,18 @@
 
         .option-card:hover { border-color: var(--primary-blue); background: rgba(59, 130, 246, 0.1); }
 
+        /* নেটওয়ার্ক ড্রপডাউন সিলেক্টর স্টাইল */
+        .network-select {
+            width: 100%; background: #020617; color: #fff;
+            padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border);
+            outline: none; font-weight: 600; font-family: 'Rajdhani', sans-serif;
+            margin-bottom: 15px; cursor: pointer;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat; background-position: right 10px center;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        }
+        .network-select:focus { border-color: var(--primary-blue); }
+
         .address-box {
             background: #020617; padding: 15px; border-radius: 10px;
             font-family: monospace; font-size: 0.8rem; word-break: break-all;
@@ -92,18 +104,15 @@
         .copy-icon { width: 20px; height: 20px; cursor: pointer; fill: var(--primary-blue); }
         
         .qr-box {
-            margin: 15px auto 5px; width: 140px; height: 140px;
+            margin: 0 auto 15px; width: 140px; height: 140px;
             background: white; padding: 8px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
         }
         
         .logo-icon { width: 20px; height: 20px; fill: currentColor; }
 
-        /* SweetAlert কাস্টম ডার্ক স্টাইল */
         .swal2-toast-custom {
-            background: #0f172a !important;
-            border: 1px solid #3b82f6 !important;
-            color: #ffffff !important;
+            background: #0f172a !important; border: 1px solid #3b82f6 !important; color: #ffffff !important;
         }
     </style>
 </head>
@@ -145,12 +154,12 @@
             <div id="step1">
                 <h2 class="step-title">SELECT ASSET</h2>
                 
-                <div class="option-card" onclick="showStep(2)">
+                <div class="option-card" onclick="openAsset('USDT')">
                     <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" style="width:20px; height:20px;" alt="USDT">
                     USDT
                 </div>
                 
-                <div class="option-card" onclick="showAddress('LTC', 'YOUR_LTC_ADDRESS', 'YOUR_LTC_QR_LINK')">
+                <div class="option-card" onclick="openAsset('LTC')">
                     <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.png" style="width:20px; height:20px;" alt="LTC">
                     LTC (Litecoin)
                 </div>
@@ -158,22 +167,12 @@
                 <button onclick="closeWallet()" style="margin-top:10px; color:#94a3b8;">Close</button>
             </div>
 
-            <div id="step2" style="display:none;">
-                <h2 class="step-title">SELECT NETWORK</h2>
-                <div class="option-card" onclick="showAddress('USDT (TRC20)', 'YOUR_USDT_TRC20_ADDRESS', 'YOUR_USDT_TRC20_QR_LINK')">
-                    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" style="width:20px; height:20px;" alt="USDT">
-                    TRC20
-                </div>
-                <div class="option-card" onclick="showAddress('USDT (BEP20)', 'YOUR_USDT_BEP20_ADDRESS', 'YOUR_USDT_BEP20_QR_LINK')">
-                    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" style="width:20px; height:20px;" alt="USDT">
-                    BEP20 (BSC)
-                </div>
-                <button onclick="showStep(1)" style="margin-top:10px; color:#94a3b8;">Back</button>
-            </div>
-
-            <div id="finalStep" style="display:none;">
-                <h2 class="step-title" id="networkTitle">ADDRESS</h2>
+            <div id="assetDetailsPage" style="display:none;">
+                <h2 class="step-title" id="assetTitle">ASSET DETAILS</h2>
                 
+                <select id="networkDropdown" class="network-select" onchange="onNetworkChange()">
+                    </select>
+
                 <div class="qr-box">
                     <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
@@ -183,33 +182,76 @@
                     <svg class="copy-icon" onclick="copyAddr()" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                 </div>
                 
-                <button onclick="closeWallet()" style="margin-top:20px; background:var(--primary-blue); padding:8px 25px; border-radius:50px;">DONE</button>
+                <div style="margin-top: 25px; display: flex; justify-content: space-between;">
+                    <button onclick="showStep(1)" style="color:#94a3b8; font-weight: 600;">Back</button>
+                    <button onclick="closeWallet()" style="background:var(--primary-blue); padding:6px 20px; border-radius:50px; font-weight: 600;">DONE</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // ওয়ালেট ডাটাবেস (এখানে তোমার অ্যাড্রেস এবং কিউআর ইমেজের লিংক বসাবে)
+        const walletData = {
+            USDT: {
+                networks: [
+                    { name: "TRC20", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" },
+                    { name: "BEP20 (BSC)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" }
+                ]
+            },
+            LTC: {
+                networks: [
+                    { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK" }
+                ]
+            }
+        };
+
+        let currentAsset = "";
+
         function openWallet() { document.getElementById('walletModal').style.display = 'flex'; showStep(1); }
         function closeWallet() { document.getElementById('walletModal').style.display = 'none'; }
 
         function showStep(step) {
             document.getElementById('step1').style.display = step === 1 ? 'block' : 'none';
-            document.getElementById('step2').style.display = step === 2 ? 'block' : 'none';
-            document.getElementById('finalStep').style.display = step === 3 ? 'block' : 'none';
+            document.getElementById('assetDetailsPage').style.display = step === 2 ? 'block' : 'none';
         }
 
-        function showAddress(network, address, qrUrl) {
-            document.getElementById('networkTitle').innerText = network + " DETAILS";
-            document.getElementById('addrText').innerText = address;
-            document.getElementById('qrImage').src = qrUrl;
-            showStep(3);
+        function openAsset(asset) {
+            currentAsset = asset;
+            document.getElementById('assetTitle').innerText = asset + " WALLET";
+            
+            const dropdown = document.getElementById('networkDropdown');
+            dropdown.innerHTML = ""; // আগের অপশন ক্লিন করা
+            
+            // ড্রপডাউনে নেটওয়ার্কগুলো যোগ করা
+            walletData[asset].networks.forEach((net, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.innerText = net.name;
+                dropdown.appendChild(option);
+            });
+
+            // প্রথম নেটওয়ার্কটি ডিফল্ট হিসেবে দেখানো
+            updateWalletDetails(0);
+            showStep(2);
+        }
+
+        function onNetworkChange() {
+            const selectedIndex = document.getElementById('networkDropdown').value;
+            updateWalletDetails(selectedIndex);
+        }
+
+        function updateWalletDetails(index) {
+            const netInfo = walletData[currentAsset].networks[index];
+            document.getElementById('addrText').innerText = netInfo.address;
+            document.getElementById('qrImage').src = netInfo.qr;
         }
 
         function copyAddr() {
             const text = document.getElementById('addrText').innerText;
             navigator.clipboard.writeText(text);
             
-            // 🚀 SweetAlert2 ডার্ক থিম নোটিফিকেশন (উপরের দিকে আসবে)
+            // SweetAlert2 টপ পপআপ নোটিফিকেশন
             Swal.fire({
                 toast: true,
                 position: 'top',
@@ -218,9 +260,7 @@
                 showConfirmButton: false,
                 timer: 2000,
                 timerProgressBar: true,
-                customClass: {
-                    popup: 'swal2-toast-custom'
-                }
+                customClass: { popup: 'swal2-toast-custom' }
             });
         }
     </script>
