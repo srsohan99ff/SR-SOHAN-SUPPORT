@@ -90,7 +90,7 @@
             transition: 0.2s;
         }
 
-        /* কাস্টম অ্যারো ডিজাইন যেন কখনোই না সরে */
+        /* কাস্টম অ্যারো ডিজাইন */
         .select-wrapper::after {
             content: "";
             position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
@@ -101,7 +101,9 @@
             pointer-events: none;
         }
         
+        /* ড্রপডাউন অপশনের সাদা ব্যাকগ্রাউন্ড ফোর্স ডার্ক ফিক্স */
         .custom-select option {
+            background: #020617 !important;
             background-color: #020617 !important;
             color: #ffffff !important;
         }
@@ -224,7 +226,7 @@
             <div id="displayArea" style="display: none;">
                 <div class="payment-details-card">
                     
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
                         <span id="networkLogo"></span>
                         <span id="networkNameText" style="font-weight: 700; color: #60a5fa; font-size: 0.95rem;"></span>
                     </div>
@@ -250,7 +252,7 @@
             </div>
             
             <div id="actionButtons" style="margin-top: 20px; display: flex; justify-content: space-between; gap: 10px;">
-                <button onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
+                <button id="closeBtn" onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
                 <button id="proceedBtn" onclick="startLoadingProcess()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);" disabled>
                     <div id="btnLoader" class="btn-spinner"></div>
                     <span id="btnText">Proceed</span>
@@ -271,7 +273,6 @@
             ]
         };
 
-        // নেটওয়ার্ক ওয়াইজ SVG লোগো কোড
         const logos = {
             USDT: `<svg width="18" height="18" viewBox="0 0 24 24" fill="#26A17B"><path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm0-19.117c2.977 0 5.39.431 5.39.963 0 .531-2.413.962-5.39.962-2.977 0-5.39-.431-5.39-.962 0-.532 2.413-.963 5.39-.963zm0 2.378c2.936 0 5.239.412 5.38.924V11.2c-.347.533-2.316.945-5.38.945-3.064 0-5.033-.412-5.38-.945V8.185c.14-.512 2.443-.924 5.38-.924zm-1.078 5.31h2.156v4.619h3.234v2.156h-8.624v-2.156h3.234v-4.619z"/></svg>`,
             LTC: `<svg width="18" height="18" viewBox="0 0 24 24" fill="#BFBBBB"><path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm2.115-16.712l-.936 3.524-1.956.712.593-2.228H9.98l-1.5 5.632-.614 2.312h7.604l-.657 2.464H5.568l2.128-8.004-1.748.636-.592 2.228H3.524l.592-2.228 2.064-.752.656-2.468h1.836l-.656 2.468 4.212-1.536.568-2.128h1.32z"/></svg>`
@@ -287,17 +288,24 @@
         }
 
         function resetWalletModal() {
+            // সিলেকশন এরিয়া রিসেট ও দৃশ্যমান করা
             document.getElementById('selectionArea').style.display = 'block';
             document.getElementById('assetDropdown').selectedIndex = 0;
+            
             const netDropdown = document.getElementById('networkDropdown');
             netDropdown.innerHTML = '<option value="" disabled selected>Select network</option>';
             netDropdown.disabled = true;
+            
             document.getElementById('displayArea').style.display = 'none';
             
-            // বাটন রিসেট
-            document.getElementById('proceedBtn').disabled = true;
-            document.getElementById('btnLoader').style.display = 'none';
-            document.getElementById('btnText').innerText = "Proceed";
+            // বাটনের নরমাল লেআউট ফিরিয়ে আনা
+            document.getElementById('actionButtons').innerHTML = `
+                <button id="closeBtn" onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
+                <button id="proceedBtn" onclick="startLoadingProcess()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);" disabled>
+                    <div id="btnLoader" class="btn-spinner"></div>
+                    <span id="btnText">Proceed</span>
+                </button>
+            `;
         }
 
         function onAssetChange() {
@@ -317,8 +325,6 @@
                 });
             }
             document.getElementById('proceedBtn').disabled = true;
-            // নতুন সিলেকশনে আগের অ্যাড্রেস হাইড হয়ে যাবে
-            document.getElementById('displayArea').style.display = 'none';
         }
 
         function onNetworkChange() {
@@ -328,11 +334,9 @@
             if(selectedIndex !== "") {
                 document.getElementById('proceedBtn').disabled = false;
             }
-            // নেটওয়ার্ক নতুন করে চেঞ্জ করলে আগের অ্যাড্রেস বক্স হাইড হয়ে নতুন প্রসিডের জন্য ওয়েট করবে
-            document.getElementById('displayArea').style.display = 'none';
         }
 
-        // বাটনের ভেতরে স্পিনার লোডিং এবং ডাইনামিক অ্যাড্রেস চেঞ্জ প্রসেস
+        // বাটন স্পিন লোডিং এবং সিলেকশন এরিয়া রিমুভ করার প্রসেস
         function startLoadingProcess() {
             const asset = document.getElementById('assetDropdown').value;
             const selectedIndex = document.getElementById('networkDropdown').value;
@@ -342,29 +346,35 @@
             const btn = document.getElementById('proceedBtn');
             const loader = document.getElementById('btnLoader');
             const btnText = document.getElementById('btnText');
+            const closeBtn = document.getElementById('closeBtn');
             
-            // ১. বাটনের ভেতর লোডিং এনিমেশন স্টার্ট
+            // ১. বাটনের ভেতর লোডিং শুরু করা এবং ক্লোজ বাটন নিষ্ক্রিয় করা
             btn.disabled = true;
+            closeBtn.disabled = true;
+            closeBtn.style.opacity = "0.3";
             loader.style.display = 'block';
             btnText.innerText = "Generating...";
-            document.getElementById('displayArea').style.display = 'none';
             
             const netInfo = walletData[asset][selectedIndex];
             
-            // ডাটা এবং লোগো সেট করা
+            // ডেটা প্রস্তুত করা
             document.getElementById('networkLogo').innerHTML = logos[asset];
             document.getElementById('networkNameText').innerText = netInfo.name;
             document.getElementById('addrText').innerText = netInfo.address;
             document.getElementById('qrImage').src = netInfo.qr;
             
-            // ২.৫ সেকেন্ড লোডিং টাইমার
+            // ২.৫ সেকেন্ড টাইমার
             setTimeout(function() {
-                loader.style.display = 'none';
-                btnText.innerText = "Proceed";
-                btn.disabled = false;
+                // ২. কারেন্সি ও নেটওয়ার্ক সিলেক্টর পুরোপুরি স্ক্রিন থেকে গায়েব (Remove)
+                document.getElementById('selectionArea').style.display = 'none';
                 
-                // পেমেন্ট এরিয়া শো করা
+                // ৩. পেমেন্ট এরিয়া (কিউআর ও নেটওয়ার্ক) শো করা
                 document.getElementById('displayArea').style.display = 'block';
+                
+                // বাটন এরিয়া আপডেট করে একটি সিঙ্গেল 'DONE' বাটন তৈরি (ক্লিন লুক)
+                document.getElementById('actionButtons').innerHTML = `
+                    <button onclick="closeWallet()" style="background: var(--primary-blue); padding:12px 0; border-radius:12px; font-weight: 700; color: #fff; width: 100%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">DONE</button>
+                `;
             }, 2500);
         }
 
