@@ -148,14 +148,22 @@
         
         .copy-field {
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
-            padding: 12px; border-radius: 8px; display: flex; align-items: center;
+            padding: 12px; border-radius: 12px; display: flex; align-items: center;
             justify-content: space-between; font-family: monospace; font-size: 0.85rem; word-break: break-all;
         }
 
+        /* প্রফেশনাল ও সুন্দর কপি বাটন */
         .inline-copy-btn {
-            display: flex; align-items: center; gap: 4px; color: #60a5fa;
-            font-weight: 700; font-family: 'Rajdhani', sans-serif; cursor: pointer; font-size: 0.9rem;
-            transition: 0.2s; padding-left: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: #60a5fa; background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            width: 34px; height: 34px; border-radius: 8px;
+            cursor: pointer; transition: all 0.2s ease; flex-shrink: 0;
+        }
+        .inline-copy-btn:hover {
+            background: rgba(59, 130, 246, 0.16);
+            border-color: rgba(59, 130, 246, 0.4);
+            color: #93c5fd;
         }
 
         .qr-box {
@@ -257,10 +265,9 @@
                     <div class="detail-row" style="margin-top: 10px;">
                         <span class="detail-label">Recipient's wallet address</span>
                         <div class="copy-field" style="margin-top: 6px;">
-                            <span id="addrText" style="width: 75%;">LOADING...</span>
+                            <span id="addrText" style="width: 82%; color: #e2e8f0;">LOADING...</span>
                             <span class="inline-copy-btn" onclick="copyText('addrText')">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1 2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                                Copy
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                             </span>
                         </div>
                     </div>
@@ -289,7 +296,6 @@
             ]
         };
 
-        // তোমার পাঠানো Imgbb ডিরেক্ট ইমেজ সোর্স লিংক দুটো এখানে সেটআপ করা হয়েছে
         const logos = {
             USDT: `<img src="https://i.ibb.co.com/MDXfJt8R/1153.png" class="crypto-image-logo" alt="USDT">`,
             LTC: `<img src="https://i.ibb.co.com/S7J570W0/1154.png" class="crypto-image-logo" alt="LTC">`
