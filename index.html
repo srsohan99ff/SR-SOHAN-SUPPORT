@@ -59,6 +59,7 @@
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
+        /* ভিডিওর মত গেটওয়ে মডাল */
         .modal {
             display: none; position: fixed; inset: 0; 
             background: rgba(2, 6, 23, 0.95); z-index: 100;
@@ -66,50 +67,80 @@
         }
 
         .modal-content {
-            background: #0f172a; width: 90%; max-width: 340px;
-            padding: 25px; border-radius: 20px; border: 1px solid var(--primary-blue);
-            text-align: center;
+            background: #0f172a; width: 95%; max-width: 380px;
+            padding: 20px; border-radius: 24px; border: 1px solid var(--primary-blue);
+            text-align: left; box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
         }
 
-        .step-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; color: #fff; }
+        .step-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; color: #fff; text-align: center; }
 
         /* থিমের সাথে ম্যাচিং ১০০% ডার্ক ড্রপডাউন সিলেক্টর */
         .custom-select {
             width: 100%; background: #020617; color: #fff;
-            padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border);
+            padding: 14px; border-radius: 12px; border: 1px solid var(--glass-border);
             outline: none; font-weight: 600; font-family: 'Rajdhani', sans-serif;
             margin-bottom: 15px; cursor: pointer;
             background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-            background-repeat: no-repeat; background-position: right 10px center;
+            background-repeat: no-repeat; background-position: right 12px center;
             -webkit-appearance: none; -moz-appearance: none; appearance: none;
             transition: 0.2s;
         }
         
-        /* ড্রপডাউন অপশনগুলোর সাদা ব্যাকগ্রাউন্ড দূর করার জন্য */
+        /* ড্রপডাউন অপশনগুলোর কালার ফিক্স */
         .custom-select option {
             background-color: #0f172a !important;
             color: #ffffff !important;
         }
         
-        .custom-select:focus { border-color: var(--primary-blue); }
-        .custom-select:disabled { opacity: 0.5; cursor: not-allowed; }
+        .custom-select:focus { border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+        .custom-select:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        .address-box {
-            background: #020617; padding: 15px; border-radius: 10px;
-            font-family: monospace; font-size: 0.8rem; word-break: break-all;
-            display: flex; align-items: center; justify-content: space-between;
-            border: 1px dashed var(--primary-blue); margin-top: 10px;
+        /* ভিডিওর মত ইনফো বক্স এবং টেক্সট */
+        .info-tag {
+            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+            padding: 6px 12px; border-radius: 8px; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; margin-bottom: 12px;
         }
 
-        .copy-icon { width: 20px; height: 20px; cursor: pointer; fill: var(--primary-blue); }
+        .timer-box {
+            border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.02);
+            padding: 10px; border-radius: 10px; text-align: center; font-weight: 600; color: #94a3b8; margin-bottom: 20px;
+        }
+        .timer-box span { color: #22c55e; font-weight: 700; }
+
+        /* ভিডিওর কপি সিস্টেম কার্ড লেআউট */
+        .payment-details-card {
+            background: #020617; border: 1px dashed var(--primary-blue);
+            padding: 15px; border-radius: 14px; margin-top: 15px;
+        }
+
+        .detail-row { margin-bottom: 12px; }
+        .detail-row:last-child { margin-bottom: 0; }
+        .detail-label { font-size: 0.85rem; color: #94a3b8; font-weight: 600; margin-bottom: 4px; display: block; }
         
+        .copy-field {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            padding: 12px; border-radius: 8px; display: flex; align-items: center;
+            justify-content: space-between; font-family: monospace; font-size: 0.85rem; word-break: break-all;
+        }
+
+        .inline-copy-btn {
+            display: flex; align-items: center; gap: 4px; color: var(--primary-blue);
+            font-weight: 700; font-family: 'Rajdhani', sans-serif; cursor: pointer; font-size: 0.9rem;
+            transition: 0.2s; padding-left: 8px;
+        }
+        .inline-copy-btn:hover { opacity: 0.8; }
+
+        .qr-toggle-btn {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
+            border-radius: 8px; padding: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+
         .qr-box {
-            margin: 15px auto; width: 140px; height: 140px;
-            background: white; padding: 8px; border-radius: 10px;
+            margin: 15px auto 0; width: 150px; height: 150px;
+            background: white; padding: 8px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
         }
-        
-        .logo-icon { width: 20px; height: 20px; fill: currentColor; }
 
         .swal2-toast-custom {
             background: #0f172a !important; border: 1px solid #3b82f6 !important; color: #ffffff !important;
@@ -127,23 +158,23 @@
 
         <div class="btn-container">
             <a href="https://www.facebook.com/srsohan99ff" class="contact-btn facebook" target="_blank">
-                <svg class="logo-icon" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 &nbsp;FACEBOOK
             </a>
 
             <div class="row-grid">
                 <a href="https://wa.me/8801329365319" class="contact-btn whatsapp" target="_blank">
-                    <svg class="logo-icon" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.917-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.917-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                     &nbsp;WHATSAPP
                 </a>
                 <a href="https://t.me/srsohan99ff" class="contact-btn telegram" target="_blank">
-                    <svg class="logo-icon" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-2.003 9.442c-.149.659-.539.822-1.091.511l-3.051-2.25-1.47 1.417c-.163.163-.299.299-.614.299l.219-3.102 5.645-5.099c.245-.218-.054-.339-.379-.122l-6.979 4.394-3.006-.941c-.654-.204-.667-.654.137-.967l11.741-4.524c.544-.204 1.02.122.861.841z"/></svg>
+                    <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-2.003 9.442c-.149.659-.539.822-1.091.511l-3.051-2.25-1.47 1.417c-.163.163-.299.299-.614.299l.219-3.102 5.645-5.099c.245-.218-.054-.339-.379-.122l-6.979 4.394-3.006-.941c-.654-.204-.667-.654.137-.967l11.741-4.524c.544-.204 1.02.122.861.841z"/></svg>
                     &nbsp;TELEGRAM
                 </a>
             </div>
 
             <div onclick="openWallet()" class="contact-btn wallet-btn">
-                <svg class="logo-icon" viewBox="0 0 24 24" fill="white"><path d="M21 18v1c0 1.105-.895 2-2 2H5c-1.105 0-2-.895-2-2V5c0-1.105.895-2 2-2h14c1.105 0 2 .895 2 2v1h-9c-1.105 0-2 .895-2 2v8c0 1.105.895 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5z"/></svg>
+                <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M21 18v1c0 1.105-.895 2-2 2H5c-1.105 0-2-.895-2-2V5c0-1.105.895-2 2-2h14c1.105 0 2 .895 2 2v1h-9c-1.105 0-2 .895-2 2v8c0 1.105.895 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5z"/></svg>
                 &nbsp;WALLET ADDRESS
             </div>
         </div>
@@ -151,86 +182,139 @@
 
     <div id="walletModal" class="modal">
         <div class="modal-content">
-            <h2 class="step-title">WALLET SELECTOR</h2>
+            <h2 class="step-title">ᏚR SOHAN PAY</h2>
             
+            <div style="text-align: center; margin-top: 5px;">
+                <div class="info-tag">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    You pay network fee
+                </div>
+            </div>
+
+            <div class="timer-box">
+                Expires in <span id="countdown">30:00</span>
+            </div>
+            
+            <label class="detail-label">Currency</label>
             <select id="assetDropdown" class="custom-select" onchange="onAssetChange()">
-                <option value="" disabled selected>Select Asset</option>
+                <option value="" disabled selected>Select currency</option>
                 <option value="USDT">USDT</option>
                 <option value="LTC">LTC (Litecoin)</option>
             </select>
 
+            <label class="detail-label">Network</label>
             <select id="networkDropdown" class="custom-select" onchange="onNetworkChange()" disabled>
-                <option value="" disabled selected>Select Network</option>
+                <option value="" disabled selected>Select network</option>
             </select>
 
             <div id="displayArea" style="display: none;">
-                <div class="qr-box">
-                    <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
+                <div class="payment-details-card">
+                    
+                    <div class="detail-row">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div>
+                                <span class="detail-label">Recipient's wallet address</span>
+                            </div>
+                            <div class="qr-toggle-btn" onclick="toggleQR()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                            </div>
+                        </div>
+                        <div class="copy-field" style="margin-top: 6px;">
+                            <span id="addrText" style="width: 75%;">LOADING...</span>
+                            <span class="inline-copy-btn" onclick="copyText('addrText')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                Copy
+                            </span>
+                        </div>
+                    </div>
 
-                <div class="address-box">
-                    <span id="addrText">LOADING...</span>
-                    <svg class="copy-icon" onclick="copyAddr()" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    <div id="qrContainer" style="display: none;">
+                        <div class="qr-box">
+                            <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                    </div>
+
+                    <div class="detail-row" style="margin-top: 15px;">
+                        <span class="detail-label">Amount to send</span>
+                        <div class="copy-field">
+                            <span id="amountText" style="font-weight: 700; color: #fff;">10 USDT</span>
+                            <span class="inline-copy-btn" onclick="copyText('amountText')">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                Copy
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             
-            <div style="margin-top: 25px; display: flex; justify-content: space-between;">
-                <button onclick="closeWallet()" style="color:#94a3b8; font-weight: 600;">Close</button>
-                <button onclick="closeWallet()" style="background:var(--primary-blue); padding:6px 20px; border-radius:50px; font-weight: 600;">DONE</button>
+            <div style="margin-top: 20px; display: flex; justify-content: space-between; gap: 10px;">
+                <button onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
+                <button onclick="closeWallet()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">Proceed</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ওয়ালেট ডেটাবেস
+        // ওয়ালেট ডেটাবেস
         const walletData = {
             USDT: [
-                { name: "TRC20", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" },
-                { name: "BEP20 (BSC)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" }
+                { name: "TRON (TRC-20)", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK", amt: "10 USDT" },
+                { name: "BSC (BEP-20)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK", amt: "10 USDT" }
             ],
             LTC: [
-                { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK" }
+                { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK", amt: "0.15 LTC" }
             ]
         };
+
+        let timerInterval;
 
         function openWallet() {
             document.getElementById('walletModal').style.display = 'flex';
             resetWalletModal();
+            startTimer(1800); // ৩০ মিনিটের কাউন্টডাউন টাইমার (১৮০০ সেকেন্ড)
         }
 
         function closeWallet() {
             document.getElementById('walletModal').style.display = 'none';
+            clearInterval(timerInterval);
         }
 
         function resetWalletModal() {
             document.getElementById('assetDropdown').selectedIndex = 0;
             const netDropdown = document.getElementById('networkDropdown');
-            netDropdown.innerHTML = '<option value="" disabled selected>Select Network</option>';
+            netDropdown.innerHTML = '<option value="" disabled selected>Select network</option>';
             netDropdown.disabled = true;
             document.getElementById('displayArea').style.display = 'none';
+            document.getElementById('qrContainer').style.display = 'none';
         }
 
-        // কারেন্সি পরিবর্তন হলে নেটওয়ার্ক আনলক করার ফিক্সড ফাংশন
+        // কারেন্সি সিলেক্ট করলে নেটওয়ার্ক ড্রপডাউন আনলক হওয়ার মেইন ফিক্স
         function onAssetChange() {
-            const asset = document.getElementById('assetDropdown').value;
+            const assetSelect = document.getElementById('assetDropdown');
+            const asset = assetSelect.options[assetSelect.selectedIndex].value;
             const netDropdown = document.getElementById('networkDropdown');
             
-            netDropdown.innerHTML = '<option value="" disabled selected>Select Network</option>';
-            netDropdown.disabled = false; // এখানে ফিক্স করা হয়েছে
+            netDropdown.innerHTML = '<option value="" disabled selected>Select network</option>';
+            netDropdown.disabled = false; // ড্রপডাউন একটিভ হলো
             
-            walletData[asset].forEach((net, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.innerText = net.name;
-                netDropdown.appendChild(option);
-            });
+            if (walletData[asset]) {
+                walletData[asset].forEach((net, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.innerText = net.name;
+                    netDropdown.appendChild(option);
+                });
+            }
 
             document.getElementById('displayArea').style.display = 'none';
         }
 
+        // নেটওয়ার্ক সিলেক্ট করার পর ডেটা বক্স ওপেন হওয়া
         function onNetworkChange() {
             const asset = document.getElementById('assetDropdown').value;
-            const selectedIndex = document.getElementById('networkDropdown').value;
+            const netDropdown = document.getElementById('networkDropdown');
+            const selectedIndex = netDropdown.options[netDropdown.selectedIndex].value;
             
             if(selectedIndex === "") return;
             
@@ -238,23 +322,54 @@
             
             document.getElementById('addrText').innerText = netInfo.address;
             document.getElementById('qrImage').src = netInfo.qr;
+            document.getElementById('amountText').innerText = netInfo.amt;
+            
             document.getElementById('displayArea').style.display = 'block';
         }
 
-        function copyAddr() {
-            const text = document.getElementById('addrText').innerText;
+        // কিউআর কোড বক্স টগল (ভিডিওর মত আইকনে ক্লিক করলে খুলবে)
+        function toggleQR() {
+            const qrBox = document.getElementById('qrContainer');
+            qrBox.style.display = qrBox.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // কপি সিস্টেম ফাংশন
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text);
             
             Swal.fire({
                 toast: true,
                 position: 'top',
                 icon: 'success',
-                title: 'Address Copied!',
+                title: 'Copied successfully!',
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 1500,
                 timerProgressBar: true,
                 customClass: { popup: 'swal2-toast-custom' }
             });
+        }
+
+        // কাউন্টডাউন টাইমার ফাংশন
+        function startTimer(duration) {
+            clearInterval(timerInterval);
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('countdown');
+            
+            timerInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(timerInterval);
+                    display.textContent = "Expired";
+                }
+            }, 1000);
         }
     </script>
 </body>
