@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ᏚR SOHAN - Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght=700&family=Rajdhani:wght=600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -108,10 +107,10 @@
 
         .selected-value-container { display: flex; align-items: center; gap: 14px; }
         
-        /* 이미지 লোগো সাইজিং */
+        /* ক্রিপ্টো লোগো ডিরেক্ট ইমেজ সাইজিং */
         .crypto-image-logo {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
@@ -152,7 +151,7 @@
             justify-content: space-between; font-family: monospace; font-size: 0.85rem; word-break: break-all;
         }
 
-        /* প্রফেশনাল ও সুন্দর কপি বাটন */
+        /* প্রফেশনাল ডাইনামিক কপি বাটন */
         .inline-copy-btn {
             display: flex; align-items: center; justify-content: center;
             color: #60a5fa; background: rgba(59, 130, 246, 0.08);
@@ -164,6 +163,13 @@
             background: rgba(59, 130, 246, 0.16);
             border-color: rgba(59, 130, 246, 0.4);
             color: #93c5fd;
+        }
+        
+        /* কপি সাকসেস স্টেট (সবুজ টিক চিহ্ন) */
+        .inline-copy-btn.copied {
+            background: rgba(16, 185, 129, 0.15) !important;
+            border-color: rgb(16, 185, 129) !important;
+            color: rgb(16, 185, 129) !important;
         }
 
         .qr-box {
@@ -181,12 +187,23 @@
         }
         @keyframes btnSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .swal2-toast-custom {
-            background: #0f172a !important; border: 1px solid #2563eb !important; color: #ffffff !important;
+        /* কাস্টম টপ নোটিফিকেশন বার */
+        .top-notification {
+            position: fixed; top: -60px; left: 50%; transform: translateX(-50%);
+            background: #0f172a; border: 1px solid #10b981; color: #ffffff;
+            padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 0.95rem;
+            display: flex; align-items: center; gap: 8px; z-index: 999;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
+        .top-notification.show { top: 20px; }
     </style>
 </head>
 <body>
+
+    <div id="topToast" class="top-notification">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        Copied successfully!
+    </div>
 
     <div class="main-container">
         <div class="main-logo">
@@ -266,7 +283,7 @@
                         <span class="detail-label">Recipient's wallet address</span>
                         <div class="copy-field" style="margin-top: 6px;">
                             <span id="addrText" style="width: 82%; color: #e2e8f0;">LOADING...</span>
-                            <span class="inline-copy-btn" onclick="copyText('addrText')">
+                            <span id="copyBtnEl" class="inline-copy-btn" onclick="copyText('addrText')">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                             </span>
                         </div>
@@ -286,7 +303,7 @@
     </div>
 
     <script>
-        // LTC নেটওয়ার্ক নাম, এড্রেস ও কিউআর লিংক সফলভাবে বসানো হয়েছে
+        // সোর্স ইমেজ সহ পারফেক্ট ওয়ালেট ডেটা স্ট্রাকচার
         const walletData = {
             USDT: [
                 { name: "BSC (BEP20)", address: "0x829f5ddbf2e7df26559a86c61837eb59fc491c13", qr: "https://i.ibb.co.com/ynCSX0Wf/1155.jpg" },
@@ -297,9 +314,10 @@
             ]
         };
 
+        // ডিরেক্ট পিএনজি আইকন দিয়ে ড্রপডাউন ইমেজ ফিক্স করা হয়েছে 
         const logos = {
-            USDT: `<img src="https://i.ibb.co.com/MDXfJt8R/1153.png" class="crypto-image-logo" alt="USDT">`,
-            LTC: `<img src="https://i.ibb.co.com/S7J570W0/1154.png" class="crypto-image-logo" alt="LTC">`
+            USDT: `<img src="https://i.ibb.co.com/9H9vjNtc/1153.png" class="crypto-image-logo" alt="USDT">`,
+            LTC: `<img src="https://i.ibb.co.com/pB36vX4M/1154.png" class="crypto-image-logo" alt="LTC">`
         };
 
         let selectedAsset = "";
@@ -461,20 +479,27 @@
             }
         }
 
+        // টিক চিহ্ন ও টপ নোটিফিকেশন সিস্টেম অ্যানিমেশন স্ক্রিপ্ট
         function copyText(elementId) {
             const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text);
             
-            Swal.fire({
-                toast: true,
-                position: 'top',
-                icon: 'success',
-                title: 'Copied successfully!',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                customClass: { popup: 'swal2-toast-custom' }
-            });
+            const copyBtn = document.getElementById('copyBtnEl');
+            const toast = document.getElementById('topToast');
+            
+            // বাটন আইকন টিক চিহ্নে রূপান্তর (সবুজ থিম)
+            copyBtn.classList.add('copied');
+            copyBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+            
+            // উপর থেকে টপ নোটিফিকেশন বার নামানো
+            toast.classList.add('show');
+            
+            // ঠিক ২ সেকেন্ড (২০০০ মিলিগ্রাম) পর রিস্টোর অ্যানিমেশন
+            setTimeout(function() {
+                copyBtn.classList.remove('copied');
+                copyBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+                toast.classList.remove('show');
+            }, 2000);
         }
     </script>
 </body>
