@@ -9,10 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-blue: #3b82f6;
+            --primary-blue: #2563eb;
             --dark-bg: #020617;
             --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         body {
@@ -33,7 +33,7 @@
         .main-logo {
             width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 20px;
             border: 3px solid var(--primary-blue);
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.5);
         }
 
         .stylish-name {
@@ -54,27 +54,27 @@
         .telegram { background: #0088cc; }
         
         .wallet-btn {
-            background: linear-gradient(90deg, #6366f1, #3b82f6);
+            background: linear-gradient(90deg, #2563eb, #1d4ed8);
             cursor: pointer; width: 100%; margin-top: 5px;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
 
         /* গেটওয়ে মডাল */
         .modal {
             display: none; position: fixed; inset: 0; 
-            background: rgba(2, 6, 23, 0.95); z-index: 100;
-            align-items: center; justify-content: center; backdrop-filter: blur(10px);
+            background: rgba(2, 6, 23, 0.96); z-index: 100;
+            align-items: center; justify-content: center; backdrop-filter: blur(12px);
         }
 
         .modal-content {
             background: #0f172a; width: 95%; max-width: 380px;
-            padding: 22px; border-radius: 24px; border: 1px solid var(--primary-blue);
-            text-align: left; box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+            padding: 22px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);
+            text-align: left; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
         .step-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; color: #fff; text-align: center; }
 
-        /* প্রিমিয়াম ড্রপডাউন ডিজাইন */
+        /* অফিশিয়াল ড্রপডাউন UI */
         .custom-dropdown {
             position: relative; width: 100%; margin-bottom: 15px; user-select: none;
         }
@@ -84,55 +84,53 @@
             border: 1px solid var(--glass-border); font-weight: 600; cursor: pointer;
             display: flex; align-items: center; justify-content: space-between; transition: 0.3s;
         }
-        .dropdown-selected.has-value { color: #fff; border-color: rgba(255,255,255,0.2); }
+        .dropdown-selected.has-value { color: #fff; border-color: rgba(255,255,255,0.15); }
         .dropdown-selected.disabled { opacity: 0.25; cursor: not-allowed; background: #090f24; }
         
         .dropdown-selected::after {
             content: ""; border-left: 5px solid transparent; border-right: 5px solid transparent;
-            border-top: 5px solid #ffffff; transition: 0.3s; margin-left: 10px;
+            border-top: 5px solid #94a3b8; transition: 0.3s; margin-left: 10px;
         }
         .dropdown-selected.open::after { transform: rotate(180deg); }
 
         .dropdown-options {
             display: none; position: absolute; top: 115%; left: 0; width: 100%;
-            background: #020617; border: 1px solid var(--primary-blue); border-radius: 12px;
+            background: #020617; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
             z-index: 10; max-height: 220px; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.7);
             padding: 6px;
         }
 
         .dropdown-option {
-            padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+            padding: 10px 12px; cursor: pointer; display: flex; align-items: center; gap: 14px;
             transition: 0.2s; color: #cbd5e1; font-weight: 600; border-radius: 8px;
         }
-        .dropdown-option:hover { background: rgba(59, 130, 246, 0.15); color: #fff; }
+        .dropdown-option:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
 
-        .selected-value-container { display: flex; align-items: center; gap: 12px; }
+        .selected-value-container { display: flex; align-items: center; gap: 14px; }
 
         .info-tag {
-            background: rgba(59, 130, 246, 0.15); color: #60a5fa;
+            background: rgba(59, 130, 246, 0.1); color: #60a5fa;
             padding: 6px 12px; border-radius: 8px; font-weight: 600;
             display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; margin-bottom: 20px;
         }
 
-        /* লক/অফ ও লাইভ জ্বলে ওঠা বাটনের CSS */
+        /* লক/অফ এবং লাইভ জ্বলে ওঠা বাটন */
         .proceed-btn-style {
-            padding: 12px 20px; border-radius: 12px; font-weight: 700; color: #64748b; 
-            width: 54%; display: flex; align-items: center; justify-content: center; gap: 8px;
-            background: #1e293b; border: 1px solid rgba(255,255,255,0.05);
-            cursor: not-allowed; transition: all 0.4s ease; opacity: 0.5; box-shadow: none;
+            padding: 14px 20px; border-radius: 12px; font-weight: 700; color: #64748b; 
+            width: 54%; display: flex; align-items: center; justify-content: center;
+            background: #1e293b; border: 1px solid rgba(255,255,255,0.03);
+            cursor: not-allowed; transition: all 0.3s ease; opacity: 0.6;
         }
         
-        /* বাটন যখন এক্টিভ হয়ে জ্বলে উঠবে */
+        /* শর্ত পূরণ হলে বাটনটি যেভাবে জ্বলে উঠবে */
         .proceed-btn-style.active {
             background: var(--primary-blue); color: #fff; cursor: pointer; opacity: 1;
-            border-color: transparent;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.45);
+            border-color: transparent; box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
         }
-        .proceed-btn-style.active:hover { background: #2563eb; transform: translateY(-1px); }
 
-        /* পেমেন্ট কার্ড লেআউট */
+        /* পেমেন্ট কার্ড */
         .payment-details-card {
-            background: #020617; border: 1px dashed var(--primary-blue);
+            background: #020617; border: 1px dashed rgba(255,255,255,0.15);
             padding: 15px; border-radius: 14px; margin-top: 5px;
         }
 
@@ -141,17 +139,16 @@
         .detail-label { font-size: 0.85rem; color: #94a3b8; font-weight: 600; margin-bottom: 4px; display: block; }
         
         .copy-field {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--glass-border);
             padding: 12px; border-radius: 8px; display: flex; align-items: center;
             justify-content: space-between; font-family: monospace; font-size: 0.85rem; word-break: break-all;
         }
 
         .inline-copy-btn {
-            display: flex; align-items: center; gap: 4px; color: var(--primary-blue);
+            display: flex; align-items: center; gap: 4px; color: #60a5fa;
             font-weight: 700; font-family: 'Rajdhani', sans-serif; cursor: pointer; font-size: 0.9rem;
             transition: 0.2s; padding-left: 8px;
         }
-        .inline-copy-btn:hover { opacity: 0.8; }
 
         .qr-box {
             margin: 5px auto 15px; width: 150px; height: 150px;
@@ -159,16 +156,17 @@
             display: flex; align-items: center; justify-content: center;
         }
 
+        /* শুধু স্পিন লোডার (কোনো টেক্সট থাকবে না) */
         .btn-spinner {
-            display: none; width: 18px; height: 18px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            display: none; width: 22px; height: 22px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
             border-left-color: #fff; border-radius: 50%;
-            animation: btnSpin 0.8s linear infinite;
+            animation: btnSpin 0.7s linear infinite;
         }
         @keyframes btnSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .swal2-toast-custom {
-            background: #0f172a !important; border: 1px solid #3b82f6 !important; color: #ffffff !important;
+            background: #0f172a !important; border: 1px solid #2563eb !important; color: #ffffff !important;
         }
     </style>
 </head>
@@ -183,23 +181,23 @@
 
         <div class="btn-container">
             <a href="https://www.facebook.com/srsohan99ff" class="contact-btn facebook" target="_blank">
-                <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                 &nbsp;FACEBOOK
             </a>
 
             <div class="row-grid">
                 <a href="https://wa.me/8801329365319" class="contact-btn whatsapp" target="_blank">
-                    <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.917-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.917-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                     &nbsp;WHATSAPP
                 </a>
                 <a href="https://t.me/srsohan99ff" class="contact-btn telegram" target="_blank">
-                    <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-2.003 9.442c-.149.659-.539.822-1.091.511l-3.051-2.25-1.47 1.417c-.163.163-.299.299-.614.299l.219-3.102 5.645-5.099c.245-.218-.054-.339-.379-.122l-6.979 4.394-3.006-.941c-.654-.204-.667-.654.137-.967l11.741-4.524c.544-.204 1.02.122.861.841z"/></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-2.003 9.442c-.149.659-.539.822-1.091.511l-3.051-2.25-1.47 1.417c-.163.163-.299.299-.614.299l.219-3.102 5.645-5.099c.245-.218-.054-.339-.379-.122l-6.979 4.394-3.006-.941c-.654-.204-.667-.654.137-.967l11.741-4.524c.544-.204 1.02.122.861.841z"/></svg>
                     &nbsp;TELEGRAM
                 </a>
             </div>
 
             <div onclick="openWallet()" class="contact-btn wallet-btn">
-                <svg class="logo-icon" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M21 18v1c0 1.105-.895 2-2 2H5c-1.105 0-2-.895-2-2V5c0-1.105.895-2 2-2h14c1.105 0 2 .895 2 2v1h-9c-1.105 0-2 .895-2 2v8c0 1.105.895 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5z"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M21 18v1c0 1.105-.895 2-2 2H5c-1.105 0-2-.895-2-2V5c0-1.105.895-2 2-2h14c1.105 0 2 .895 2 2v1h-9c-1.105 0-2 .895-2 2v8c0 1.105.895 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5z"/></svg>
                 &nbsp;WALLET ADDRESS
             </div>
         </div>
@@ -237,7 +235,7 @@
             <div id="displayArea" style="display: none;">
                 <div class="payment-details-card">
                     
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04);">
                         <span id="networkLogo"></span>
                         <span id="networkNameText" style="font-weight: 700; color: #60a5fa; font-size: 0.95rem;"></span>
                     </div>
@@ -263,10 +261,10 @@
             </div>
             
             <div id="actionButtons" style="margin-top: 20px; display: flex; justify-content: space-between; gap: 10px;">
-                <button id="closeBtn" onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 40%; text-align: center;">Close</button>
+                <button id="closeBtn" onclick="closeWallet()" style="border: 1px solid rgba(255,255,255,0.08); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 40%; text-align: center;">Close</button>
                 <button id="proceedBtn" onclick="startLoadingProcess()" class="proceed-btn-style" disabled>
                     <div id="btnLoader" class="btn-spinner"></div>
-                    <span id="btnText">Proceed</span>
+                    <span id="btnText">Proceed to the payment</span>
                 </button>
             </div>
         </div>
@@ -283,9 +281,10 @@
             ]
         };
 
+        // স্ক্রিনশট ম্যাচড গোল ব্যাকগ্রাউন্ড ক্রিপ্টোমাসের অফিশিয়াল ভেক্টর লোগো
         const logos = {
-            USDT: `<svg width="20" height="20" viewBox="0 0 24 24" fill="#26A17B"><path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm0-19.117c2.977 0 5.39.431 5.39.963 0 .531-2.413.962-5.39.962-2.977 0-5.39-.431-5.39-.962 0-.532 2.413-.963 5.39-.963zm0 2.378c2.936 0 5.239.412 5.38.924V11.2c-.347.533-2.316.945-5.38.945-3.064 0-5.033-.412-5.38-.945V8.185c.14-.512 2.443-.924 5.38-.924zm-1.078 5.31h2.156v4.619h3.234v2.156h-8.624v-2.156h3.234v-4.619z"/></svg>`,
-            LTC: `<svg width="20" height="20" viewBox="0 0 24 24" fill="#BFBBBB"><path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm2.115-16.712l-.936 3.524-1.956.712.593-2.228H9.98l-1.5 5.632-.614 2.312h7.604l-.657 2.464H5.568l2.128-8.004-1.748.636-.592 2.228H3.524l.592-2.228 2.064-.752.656-2.468h1.836l-.656 2.468 4.212-1.536.568-2.128h1.32z"/></svg>`
+            USDT: `<svg width="24" height="24" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#1ba27a"/><path d="M16 7.5c4.4 0 8 .6 8 1.4s-3.6 1.4-8 1.4-8-.6-8-1.4 3.6-1.4 8-1.4zM16 11c4.3 0 7.7.6 7.9 1.3v4c-.5.7-3.4 1.3-7.9 1.3s-7.4-.6-7.9-1.3v-4c.2-.7 3.6-1.3 7.9-1.3zm-1.6 7.8h3.2v6.4h-3.2z" fill="#fff"/></svg>`,
+            LTC: `<svg width="24" height="24" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#2d4f7c"/><path d="M18.6 9.4l-1.3 4.9-2.7 1 .8-3.1h-2.5l-2.1 7.8-.8 3.2h10.5l-.9 3.4H9.7l2.9-11.1-2.4.9-.8 3.1H7l.8-3.1 2.8-1 1-3.4h2.5l-.9 3.4 5.8-2.1.8-3z" fill="#fff"/></svg>`
         };
 
         let selectedAsset = "";
@@ -330,7 +329,7 @@
                     ${logos.USDT} <span>USDT</span>
                 </div>
                 <div class="dropdown-option" onclick="selectAsset('LTC')">
-                    ${logos.LTC} <span>LTC (Litecoin)</span>
+                    ${logos.LTC} <span>LTC</span>
                 </div>
             `;
         }
@@ -344,14 +343,12 @@
             document.getElementById('assetDropdownOptions').style.display = 'none';
             assetBtn.classList.remove('open');
 
-            // নেটওয়ার্ক পার্ট রিসেট ও অফ করা
             const netSelected = document.getElementById('networkSelected');
             netSelected.classList.remove('disabled', 'has-value');
             netSelected.innerHTML = `<span class="selected-value-container">Select network</span>`;
             
             selectedNetworkIndex = "";
             
-            // বাটন সম্পূর্ণ লক/অফ লুক করা
             const btn = document.getElementById('proceedBtn');
             btn.disabled = true;
             btn.classList.remove('active');
@@ -376,7 +373,7 @@
             document.getElementById('networkDropdownOptions').style.display = 'none';
             netBtn.classList.remove('open');
 
-            // শর্ত পূরণ: বাটন এখন এক্টিভ হয়ে নীল আলোতে জ্বলে উঠবে!
+            // বাটন লাইভ একটিভ হয়ে রঙ বদলে যাবে
             const btn = document.getElementById('proceedBtn');
             btn.disabled = false;
             btn.classList.add('active');
@@ -398,13 +395,12 @@
             
             document.getElementById('displayArea').style.display = 'none';
             
-            // বাটনের প্রাথমিক অফ-স্টেট সেট করা
             const actionArea = document.getElementById('actionButtons');
             actionArea.innerHTML = `
-                <button id="closeBtn" onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 40%; text-align: center;">Close</button>
+                <button id="closeBtn" onclick="closeWallet()" style="border: 1px solid rgba(255,255,255,0.08); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 40%; text-align: center;">Close</button>
                 <button id="proceedBtn" onclick="startLoadingProcess()" class="proceed-btn-style" disabled>
                     <div id="btnLoader" class="btn-spinner"></div>
-                    <span id="btnText">Proceed</span>
+                    <span id="btnText">Proceed to the payment</span>
                 </button>
             `;
         }
@@ -418,11 +414,13 @@
             const closeBtn = document.getElementById('closeBtn');
             
             btn.disabled = true;
-            btn.classList.remove('active'); // লোড হওয়ার সময় গ্লো বন্ধ হবে
+            btn.classList.remove('active'); 
             closeBtn.disabled = true;
             closeBtn.style.opacity = "0.3";
+            
+            // শর্ত পূরণ: টেক্সট উধাও হবে এবং শুধু লোডার ঘুরবে
+            btnText.innerText = ""; 
             loader.style.display = 'block';
-            btnText.innerText = "Generating...";
             
             const netInfo = walletData[selectedAsset][selectedNetworkIndex];
             
@@ -432,13 +430,11 @@
             document.getElementById('qrImage').src = netInfo.qr;
             
             setTimeout(function() {
-                // সিলেকশন এরিয়া পুরোপুরি রিমুভ (গায়েব)
                 document.getElementById('selectionArea').style.display = 'none';
                 document.getElementById('displayArea').style.display = 'block';
                 
-                // ফাইনাল ডান বাটন ইন্টারফেস
                 document.getElementById('actionButtons').innerHTML = `
-                    <button onclick="closeWallet()" style="background: var(--primary-blue); padding:12px 0; border-radius:12px; font-weight: 700; color: #fff; width: 100%; text-align: center; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.45);">DONE</button>
+                    <button onclick="closeWallet()" style="background: var(--primary-blue); padding:14px 0; border-radius:12px; font-weight: 700; color: #fff; width: 100%; text-align: center; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.45);">DONE</button>
                 `;
             }, 2500);
         }
