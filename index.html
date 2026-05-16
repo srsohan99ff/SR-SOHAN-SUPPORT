@@ -108,19 +108,14 @@
 
         .selected-value-container { display: flex; align-items: center; gap: 14px; }
         
-        /* Cryptomus এর স্ক্রিনশট থেকে হুবহু কালার ম্যাচ করা গোল লোগো ডিজাইন */
-        .crypto-vector-icon {
+        /* ইমেজ লোগো সাইজিং */
+        .crypto-image-logo {
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            object-fit: cover;
             flex-shrink: 0;
         }
-        /* হুবহু Cryptomus লাইট গ্রিন এবং নেভি ব্লু ব্যাকগ্রাউন্ড */
-        .usdt-cryptomus { background-color: #53b99a; }
-        .ltc-cryptomus { background-color: #2e599b; }
 
         .info-tag {
             background: rgba(59, 130, 246, 0.1); color: #60a5fa;
@@ -294,10 +289,10 @@
             ]
         };
 
-        // ১১৪৯ স্ক্রিনশটের Cryptomus এর সাথে হুবহু পিক্সেল টু পিক্সেল মিলানো পিওর কোড লোগো
+        // তোমার পাঠানো Imgbb ডিরেক্ট ইমেজ সোর্স লিংক দুটো এখানে সেটআপ করা হয়েছে
         const logos = {
-            USDT: `<span class="crypto-vector-icon usdt-cryptomus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="9" x2="19" y2="9"></line><ellipse cx="12" cy="14" rx="6" ry="3" stroke="white" stroke-width="2" fill="none"></ellipse></svg></span>`,
-            LTC: `<span class="crypto-vector-icon ltc-cryptomus"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4l-3 13h13"></path><line x1="3" y1="12" x2="12" y2="9"></line></svg></span>`
+            USDT: `<img src="https://i.ibb.co.com/MDXfJt8R/1153.png" class="crypto-image-logo" alt="USDT">`,
+            LTC: `<img src="https://i.ibb.co.com/S7J570W0/1154.png" class="crypto-image-logo" alt="LTC">`
         };
 
         let selectedAsset = "";
