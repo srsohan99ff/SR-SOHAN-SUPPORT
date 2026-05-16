@@ -11,7 +11,7 @@
         :root {
             --primary-blue: #2563eb;
             --dark-bg: #020617;
-            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
         }
 
@@ -108,10 +108,13 @@
 
         .selected-value-container { display: flex; align-items: center; gap: 14px; }
         
-        /* ওরিজিনাল ইমেজ লোগো স্টাইল */
-        .crypto-img-icon {
-            width: 24px; height: 24px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+        /* ১০০% রিয়ালিস্টিক ভেক্টর ক্রিপ্টো লোগো ডিজাইন */
+        .crypto-vector-icon {
+            width: 26px; height: 26px; border-radius: 50%; display: inline-flex;
+            align-items: center; justify-content: center; flex-shrink: 0;
         }
+        .usdt-style { background-color: #26A17B; }
+        .ltc-style { background-color: #345D9D; }
 
         .info-tag {
             background: rgba(59, 130, 246, 0.1); color: #60a5fa;
@@ -285,15 +288,10 @@
             ]
         };
 
-        // তোমার পাঠানো হুবহু অফিশিয়াল ওরিজিনাল ইমেজ লিঙ্কসমূহ
-        const imgUrls = {
-            USDT: "https://i.ibb.co.com/gFsXbyw9/1153.png",
-            LTC: "https://i.ibb.co.com/S77Ym7v1/1154.png"
-        };
-
+        // অফিশিয়াল পিওর ভেক্টর ডিজাইনে কনভার্ট করা লোগো (কখনো ভাঙবে না বা ব্লক হবে না)
         const logos = {
-            USDT: `<img src="${imgUrls.USDT}" class="crypto-img-icon" alt="USDT">`,
-            LTC: `<img src="${imgUrls.LTC}" class="crypto-img-icon" alt="LTC">`
+            USDT: `<span class="crypto-vector-icon usdt-style"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M11.25 15.75v-2.146c-2.73-.131-4.75-.765-4.75-1.53 0-.763 2.02-1.398 4.75-1.529V8.25H4.5V4.5h15v3.75h-6.75v2.295c2.73.131 4.75.766 4.75 1.53 0 .764-2.02 1.398-4.75 1.529v2.146h6.75V19.5h-15v-3.75h6.75z"/></svg></span>`,
+            LTC: `<span class="crypto-vector-icon ltc-style"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M5.433 21.75l2.97-11.235H5.04l.743-2.82h3.363l1.17-4.44h3.513l-1.17 4.44h4.86l-.743 2.82h-4.86L9.15 21.75H5.433z"/></svg></span>`
         };
 
         let selectedAsset = "";
@@ -426,7 +424,6 @@
             closeBtn.disabled = true;
             closeBtn.style.opacity = "0.3";
             
-            // "Proceed" লেখা পুরোপুরি ভ্যানিশ হয়ে যাবে এবং শুধু স্পিনার ঘুরবে
             btnText.innerText = ""; 
             loader.style.display = 'block';
             
