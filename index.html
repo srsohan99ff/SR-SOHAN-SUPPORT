@@ -74,19 +74,33 @@
 
         .step-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; color: #fff; text-align: center; }
 
-        /* থিমের সাথে ম্যাচিং ১০০% ডার্ক ড্রপডাউন এবং অপশন ফোর্স ফিক্স */
+        /* ডার্ক ড্রপডাউন সিলেক্টর এবং অ্যারো চিহ্ন ফিক্স */
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
         .custom-select {
             width: 100%; background: #020617 !important; color: #fff !important;
             padding: 14px; border-radius: 12px; border: 1px solid var(--glass-border);
             outline: none; font-weight: 600; font-family: 'Rajdhani', sans-serif;
-            margin-bottom: 15px; cursor: pointer;
-            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-            background-repeat: no-repeat; background-position: right 12px center;
+            cursor: pointer;
             -webkit-appearance: none; -moz-appearance: none; appearance: none;
             transition: 0.2s;
         }
+
+        /* কাস্টম অ্যারো ডিজাইন যেন কখনোই না সরে */
+        .select-wrapper::after {
+            content: "";
+            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            width: 0; height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #ffffff;
+            pointer-events: none;
+        }
         
-        /* মোবাইল এবং ক্রোম ব্রাউজারে ড্রপডাউন অপশনের সাদা ব্যাকগ্রাউন্ড দূর করার ফিক্স */
         .custom-select option {
             background-color: #020617 !important;
             color: #ffffff !important;
@@ -130,17 +144,15 @@
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* গ্লোয়িং ডার্ক লোডার */
-        .loader-container {
-            display: none; text-align: center; padding: 30px 0;
+        /* বাটনের ভেতরের স্পিনারের জন্য CSS */
+        .btn-spinner {
+            display: none;
+            width: 18px; height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-left-color: #fff; border-radius: 50%;
+            animation: btnSpin 0.8s linear infinite;
         }
-        .custom-spinner {
-            width: 40px; height: 40px; border: 4px solid rgba(59, 130, 246, 0.1);
-            border-left-color: var(--primary-blue); border-radius: 50%;
-            animation: spin 1s linear infinite; margin: 0 auto 10px;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes btnSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .swal2-toast-custom {
             background: #0f172a !important; border: 1px solid #3b82f6 !important; color: #ffffff !important;
@@ -193,28 +205,31 @@
                 </div>
                 
                 <label class="detail-label">Currency</label>
-                <select id="assetDropdown" class="custom-select" onchange="onAssetChange()">
-                    <option value="" disabled selected>Select currency</option>
-                    <option value="USDT">USDT</option>
-                    <option value="LTC">LTC (Litecoin)</option>
-                </select>
+                <div class="select-wrapper">
+                    <select id="assetDropdown" class="custom-select" onchange="onAssetChange()">
+                        <option value="" disabled selected>Select currency</option>
+                        <option value="USDT">USDT</option>
+                        <option value="LTC">LTC (Litecoin)</option>
+                    </select>
+                </div>
 
                 <label class="detail-label">Network</label>
-                <select id="networkDropdown" class="custom-select" onchange="onNetworkChange()" disabled>
-                    <option value="" disabled selected>Select network</option>
-                </select>
-            </div>
-
-            <div id="loaderArea" class="loader-container">
-                <div class="custom-spinner"></div>
-                <p style="color: #60a5fa; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px;">GENERATING ADDRESS...</p>
+                <div class="select-wrapper">
+                    <select id="networkDropdown" class="custom-select" onchange="onNetworkChange()" disabled>
+                        <option value="" disabled selected>Select network</option>
+                    </select>
+                </div>
             </div>
 
             <div id="displayArea" style="display: none;">
                 <div class="payment-details-card">
                     
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; background: rgba(255,255,255,0.03); padding: 8px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                        <span id="networkLogo"></span>
+                        <span id="networkNameText" style="font-weight: 700; color: #60a5fa; font-size: 0.95rem;"></span>
+                    </div>
+
                     <div class="detail-row">
-                        <span class="detail-label" style="text-align: center; display: block; margin-bottom: 8px;">Scan QR Code to Pay</span>
                         <div class="qr-box">
                             <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
                         </div>
@@ -236,7 +251,10 @@
             
             <div id="actionButtons" style="margin-top: 20px; display: flex; justify-content: space-between; gap: 10px;">
                 <button onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
-                <button id="proceedBtn" onclick="startLoadingProcess()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);" disabled>Proceed</button>
+                <button id="proceedBtn" onclick="startLoadingProcess()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);" disabled>
+                    <div id="btnLoader" class="btn-spinner"></div>
+                    <span id="btnText">Proceed</span>
+                </button>
             </div>
         </div>
     </div>
@@ -245,12 +263,18 @@
         // ওয়ালেট ডেটাবেস
         const walletData = {
             USDT: [
-                { name: "TRON (TRC-20)", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" },
-                { name: "BSC (BEP-20)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" }
+                { name: "USDT - TRON (TRC-20)", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" },
+                { name: "USDT - BSC (BEP-20)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" }
             ],
             LTC: [
-                { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK" }
+                { name: "LTC - Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK" }
             ]
+        };
+
+        // নেটওয়ার্ক ওয়াইজ SVG লোগো কোড
+        const logos = {
+            USDT: `<svg width="18" height="18" viewBox="0 0 24 24" fill="#26A17B"><path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm0-19.117c2.977 0 5.39.431 5.39.963 0 .531-2.413.962-5.39.962-2.977 0-5.39-.431-5.39-.962 0-.532 2.413-.963 5.39-.963zm0 2.378c2.936 0 5.239.412 5.38.924V11.2c-.347.533-2.316.945-5.38.945-3.064 0-5.033-.412-5.38-.945V8.185c.14-.512 2.443-.924 5.38-.924zm-1.078 5.31h2.156v4.619h3.234v2.156h-8.624v-2.156h3.234v-4.619z"/></svg>`,
+            LTC: `<svg width="18" height="18" viewBox="0 0 24 24" fill="#BFBBBB"><path d="M12 24c6.627 0 12-5.373 12-12S18.627 0 12 0 0 5.373 0 12s5.373 12 12 12zm2.115-16.712l-.936 3.524-1.956.712.593-2.228H9.98l-1.5 5.632-.614 2.312h7.604l-.657 2.464H5.568l2.128-8.004-1.748.636-.592 2.228H3.524l.592-2.228 2.064-.752.656-2.468h1.836l-.656 2.468 4.212-1.536.568-2.128h1.32z"/></svg>`
         };
 
         function openWallet() {
@@ -263,20 +287,17 @@
         }
 
         function resetWalletModal() {
-            document.getElementById('selectionArea').style.display = 'block'; // সিলেকশন ফেরত আনা
+            document.getElementById('selectionArea').style.display = 'block';
             document.getElementById('assetDropdown').selectedIndex = 0;
             const netDropdown = document.getElementById('networkDropdown');
             netDropdown.innerHTML = '<option value="" disabled selected>Select network</option>';
             netDropdown.disabled = true;
-            document.getElementById('proceedBtn').disabled = true;
-            document.getElementById('loaderArea').style.display = 'none';
             document.getElementById('displayArea').style.display = 'none';
             
             // বাটন রিসেট
-            document.getElementById('actionButtons').innerHTML = `
-                <button onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
-                <button id="proceedBtn" onclick="startLoadingProcess()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);" disabled>Proceed</button>
-            `;
+            document.getElementById('proceedBtn').disabled = true;
+            document.getElementById('btnLoader').style.display = 'none';
+            document.getElementById('btnText').innerText = "Proceed";
         }
 
         function onAssetChange() {
@@ -296,6 +317,8 @@
                 });
             }
             document.getElementById('proceedBtn').disabled = true;
+            // নতুন সিলেকশনে আগের অ্যাড্রেস হাইড হয়ে যাবে
+            document.getElementById('displayArea').style.display = 'none';
         }
 
         function onNetworkChange() {
@@ -305,37 +328,43 @@
             if(selectedIndex !== "") {
                 document.getElementById('proceedBtn').disabled = false;
             }
+            // নেটওয়ার্ক নতুন করে চেঞ্জ করলে আগের অ্যাড্রেস বক্স হাইড হয়ে নতুন প্রসিডের জন্য ওয়েট করবে
+            document.getElementById('displayArea').style.display = 'none';
         }
 
-        // ২.৫ সেকেন্ডের ডাইনামিক লোডিং ও রিমুভিং প্রসেস
+        // বাটনের ভেতরে স্পিনার লোডিং এবং ডাইনামিক অ্যাড্রেস চেঞ্জ প্রসেস
         function startLoadingProcess() {
             const asset = document.getElementById('assetDropdown').value;
             const selectedIndex = document.getElementById('networkDropdown').value;
             
             if(selectedIndex === "") return;
             
-            // ১. সিলেকশন এরিয়া এবং বাটন হাইড করে লোডার চালু করা
-            document.getElementById('selectionArea').style.display = 'none';
-            document.getElementById('actionButtons').style.display = 'none';
-            document.getElementById('loaderArea').style.display = 'block';
+            const btn = document.getElementById('proceedBtn');
+            const loader = document.getElementById('btnLoader');
+            const btnText = document.getElementById('btnText');
+            
+            // ১. বাটনের ভেতর লোডিং এনিমেশন স্টার্ট
+            btn.disabled = true;
+            loader.style.display = 'block';
+            btnText.innerText = "Generating...";
+            document.getElementById('displayArea').style.display = 'none';
             
             const netInfo = walletData[asset][selectedIndex];
             
-            // ডেটা ইনজেক্ট করা
+            // ডাটা এবং লোগো সেট করা
+            document.getElementById('networkLogo').innerHTML = logos[asset];
+            document.getElementById('networkNameText').innerText = netInfo.name;
             document.getElementById('addrText').innerText = netInfo.address;
             document.getElementById('qrImage').src = netInfo.qr;
             
-            // ২.৫ সেকেন্ড পর অ্যাকশন
+            // ২.৫ সেকেন্ড লোডিং টাইমার
             setTimeout(function() {
-                document.getElementById('loaderArea').style.display = 'none'; // লোডার বন্ধ
-                document.getElementById('displayArea').style.display = 'block'; // শুধু কিউআর ও অ্যাড্রেস শো
+                loader.style.display = 'none';
+                btnText.innerText = "Proceed";
+                btn.disabled = false;
                 
-                // নিচে শুধু একটি ফুল-উইথ 'DONE' বাটন নিয়ে আসা (ক্লিন লুকের জন্য)
-                const actionArea = document.getElementById('actionButtons');
-                actionArea.innerHTML = `
-                    <button onclick="closeWallet()" style="background: var(--primary-blue); padding:12px 0; border-radius:12px; font-weight: 700; color: #fff; width: 100%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">DONE</button>
-                `;
-                actionArea.style.display = 'flex';
+                // পেমেন্ট এরিয়া শো করা
+                document.getElementById('displayArea').style.display = 'block';
             }, 2500);
         }
 
