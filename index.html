@@ -74,9 +74,9 @@
 
         .step-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; color: #fff; text-align: center; }
 
-        /* থিমের সাথে ম্যাচিং ১০০% ডার্ক ড্রপডাউন সিলেক্টর */
+        /* থিমের সাথে ম্যাচিং ১০০% ডার্ক ড্রপডাউন এবং অপশন ফোর্স ফিক্স */
         .custom-select {
-            width: 100%; background: #020617; color: #fff;
+            width: 100%; background: #020617 !important; color: #fff !important;
             padding: 14px; border-radius: 12px; border: 1px solid var(--glass-border);
             outline: none; font-weight: 600; font-family: 'Rajdhani', sans-serif;
             margin-bottom: 15px; cursor: pointer;
@@ -86,14 +86,14 @@
             transition: 0.2s;
         }
         
-        /* ড্রপডাউন অপশন কালার */
+        /* মোবাইল এবং ক্রোম ব্রাউজারে ড্রপডাউন অপশনের সাদা ব্যাকগ্রাউন্ড দূর করার ফিক্স */
         .custom-select option {
-            background-color: #0f172a !important;
+            background-color: #020617 !important;
             color: #ffffff !important;
         }
         
         .custom-select:focus { border-color: var(--primary-blue); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
-        .custom-select:disabled { opacity: 0.4; cursor: not-allowed; }
+        .custom-select:disabled { opacity: 0.3; cursor: not-allowed; }
 
         .info-tag {
             background: rgba(59, 130, 246, 0.15); color: #60a5fa;
@@ -104,7 +104,7 @@
         /* পেমেন্ট কার্ড লেআউট */
         .payment-details-card {
             background: #020617; border: 1px dashed var(--primary-blue);
-            padding: 15px; border-radius: 14px; margin-top: 15px;
+            padding: 15px; border-radius: 14px; margin-top: 5px;
         }
 
         .detail-row { margin-bottom: 12px; }
@@ -124,7 +124,6 @@
         }
         .inline-copy-btn:hover { opacity: 0.8; }
 
-        /* কিউআর কোড বক্স প্রথমে রাখার জন্য সিএসএস */
         .qr-box {
             margin: 5px auto 15px; width: 150px; height: 150px;
             background: white; padding: 8px; border-radius: 12px;
@@ -133,7 +132,7 @@
 
         /* গ্লোয়িং ডার্ক লোডার */
         .loader-container {
-            display: none; text-align: center; padding: 20px 0;
+            display: none; text-align: center; padding: 30px 0;
         }
         .custom-spinner {
             width: 40px; height: 40px; border: 4px solid rgba(59, 130, 246, 0.1);
@@ -185,24 +184,26 @@
         <div class="modal-content">
             <h2 class="step-title">ᏚR SOHAN PAY</h2>
             
-            <div style="text-align: center;">
-                <div class="info-tag">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    You pay network fee
+            <div id="selectionArea">
+                <div style="text-align: center;">
+                    <div class="info-tag">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        You pay network fee
+                    </div>
                 </div>
-            </div>
-            
-            <label class="detail-label">Currency</label>
-            <select id="assetDropdown" class="custom-select" onchange="onAssetChange()">
-                <option value="" disabled selected>Select currency</option>
-                <option value="USDT">USDT</option>
-                <option value="LTC">LTC (Litecoin)</option>
-            </select>
+                
+                <label class="detail-label">Currency</label>
+                <select id="assetDropdown" class="custom-select" onchange="onAssetChange()">
+                    <option value="" disabled selected>Select currency</option>
+                    <option value="USDT">USDT</option>
+                    <option value="LTC">LTC (Litecoin)</option>
+                </select>
 
-            <label class="detail-label">Network</label>
-            <select id="networkDropdown" class="custom-select" onchange="onNetworkChange()" disabled>
-                <option value="" disabled selected>Select network</option>
-            </select>
+                <label class="detail-label">Network</label>
+                <select id="networkDropdown" class="custom-select" onchange="onNetworkChange()" disabled>
+                    <option value="" disabled selected>Select network</option>
+                </select>
+            </div>
 
             <div id="loaderArea" class="loader-container">
                 <div class="custom-spinner"></div>
@@ -233,7 +234,7 @@
                 </div>
             </div>
             
-            <div style="margin-top: 20px; display: flex; justify-content: space-between; gap: 10px;">
+            <div id="actionButtons" style="margin-top: 20px; display: flex; justify-content: space-between; gap: 10px;">
                 <button onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
                 <button id="proceedBtn" onclick="startLoadingProcess()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);" disabled>Proceed</button>
             </div>
@@ -262,6 +263,7 @@
         }
 
         function resetWalletModal() {
+            document.getElementById('selectionArea').style.display = 'block'; // সিলেকশন ফেরত আনা
             document.getElementById('assetDropdown').selectedIndex = 0;
             const netDropdown = document.getElementById('networkDropdown');
             netDropdown.innerHTML = '<option value="" disabled selected>Select network</option>';
@@ -269,9 +271,14 @@
             document.getElementById('proceedBtn').disabled = true;
             document.getElementById('loaderArea').style.display = 'none';
             document.getElementById('displayArea').style.display = 'none';
+            
+            // বাটন রিসেট
+            document.getElementById('actionButtons').innerHTML = `
+                <button onclick="closeWallet()" style="border: 1px solid var(--glass-border); padding:10px 20px; border-radius:12px; font-weight: 600; color: #94a3b8; width: 45%; text-align: center;">Close</button>
+                <button id="proceedBtn" onclick="startLoadingProcess()" style="background: var(--primary-blue); padding:10px 20px; border-radius:12px; font-weight: 700; color: #fff; width: 50%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);" disabled>Proceed</button>
+            `;
         }
 
-        // কারেন্সি সিলেক্ট করলে নেটওয়ার্ক ড্রপডাউন একটিভ করার লজিক
         function onAssetChange() {
             const assetSelect = document.getElementById('assetDropdown');
             const asset = assetSelect.options[assetSelect.selectedIndex].value;
@@ -288,49 +295,50 @@
                     netDropdown.appendChild(option);
                 });
             }
-
             document.getElementById('proceedBtn').disabled = true;
-            document.getElementById('displayArea').style.display = 'none';
         }
 
-        // নেটওয়ার্ক সিলেক্ট করার পর Proceed বাটন একটিভ করা (সরাসরি ডেটা শো করবে না)
         function onNetworkChange() {
             const netDropdown = document.getElementById('networkDropdown');
             const selectedIndex = netDropdown.options[netDropdown.selectedIndex].value;
             
             if(selectedIndex !== "") {
-                document.getElementById('proceedBtn').disabled = false; // Proceed বাটন আনলক হলো
+                document.getElementById('proceedBtn').disabled = false;
             }
-            document.getElementById('displayArea').style.display = 'none';
         }
 
-        // প্রসিড করার পর ২.৫ সেকেন্ডের লোডিং প্রসেস
+        // ২.৫ সেকেন্ডের ডাইনামিক লোডিং ও রিমুভিং প্রসেস
         function startLoadingProcess() {
             const asset = document.getElementById('assetDropdown').value;
             const selectedIndex = document.getElementById('networkDropdown').value;
             
             if(selectedIndex === "") return;
             
-            // প্রথমে পেমেন্ট এরিয়া হাইড করে লোডার অন করা
-            document.getElementById('displayArea').style.display = 'none';
+            // ১. সিলেকশন এরিয়া এবং বাটন হাইড করে লোডার চালু করা
+            document.getElementById('selectionArea').style.display = 'none';
+            document.getElementById('actionButtons').style.display = 'none';
             document.getElementById('loaderArea').style.display = 'block';
-            document.getElementById('proceedBtn').disabled = true;
             
             const netInfo = walletData[asset][selectedIndex];
             
-            // ডেটাগুলো ব্যাকগ্রাউন্ডে সেট করে রাখা
+            // ডেটা ইনজেক্ট করা
             document.getElementById('addrText').innerText = netInfo.address;
             document.getElementById('qrImage').src = netInfo.qr;
             
-            // ২.৫ সেকেন্ড (২৫০০ মিলি-সেকেন্ড) পর লোডার বন্ধ হয়ে মেইন কিউআর এবং অ্যাড্রেস শো করবে
+            // ২.৫ সেকেন্ড পর অ্যাকশন
             setTimeout(function() {
-                document.getElementById('loaderArea').style.display = 'none';
-                document.getElementById('displayArea').style.display = 'block';
-                document.getElementById('proceedBtn').disabled = false;
+                document.getElementById('loaderArea').style.display = 'none'; // লোডার বন্ধ
+                document.getElementById('displayArea').style.display = 'block'; // শুধু কিউআর ও অ্যাড্রেস শো
+                
+                // নিচে শুধু একটি ফুল-উইথ 'DONE' বাটন নিয়ে আসা (ক্লিন লুকের জন্য)
+                const actionArea = document.getElementById('actionButtons');
+                actionArea.innerHTML = `
+                    <button onclick="closeWallet()" style="background: var(--primary-blue); padding:12px 0; border-radius:12px; font-weight: 700; color: #fff; width: 100%; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);">DONE</button>
+                `;
+                actionArea.style.display = 'flex';
             }, 2500);
         }
 
-        // কপি সিস্টেম ফাংশন
         function copyText(elementId) {
             const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text);
