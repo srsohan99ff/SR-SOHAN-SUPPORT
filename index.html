@@ -59,57 +59,69 @@
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
+        /* মেইন ওয়ালেট মডাল (Cryptomus Style) */
         .modal {
             display: none; position: fixed; inset: 0; 
-            background: rgba(2, 6, 23, 0.95); z-index: 100;
-            align-items: center; justify-content: center; backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6); z-index: 100;
+            align-items: center; justify-content: center; backdrop-filter: blur(5px);
         }
 
         .modal-content {
-            background: #0f172a; width: 90%; max-width: 340px;
-            padding: 25px; border-radius: 20px; border: 1px solid var(--primary-blue);
-            text-align: center;
+            background: #ffffff; width: 100%; max-width: 360px;
+            padding: 24px; border-radius: 24px; text-align: center;
+            color: #1e293b; position: relative; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
         }
 
-        .step-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; color: #fff; }
-
-        /* থিমের সাথে ম্যাচিং ডার্ক ড্রপডাউন সিলেক্টর */
-        .custom-select {
-            width: 100%; background: #020617; color: #fff;
-            padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border);
-            outline: none; font-weight: 600; font-family: 'Rajdhani', sans-serif;
-            margin-bottom: 15px; cursor: pointer;
-            background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-            background-repeat: no-repeat; background-position: right 10px center;
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
-            transition: 0.2s;
+        /* ক্রিপ্টোরেট কাস্টম সিলেক্টর বাটন */
+        .crypto-selector {
+            width: 100%; background: #f8fafc; border: 1px solid #e2e8f0;
+            padding: 14px 16px; border-radius: 14px; display: flex;
+            align-items: center; justify-content: space-between;
+            font-weight: 600; font-size: 1rem; cursor: pointer; margin-bottom: 16px;
         }
-        /* ড্রপডাউনের ভেতরের অপশনগুলোর ব্যাকগ্রাউন্ড কালো করা */
-        .custom-select option {
-            background: #0f172a;
-            color: #fff;
-        }
-        .custom-select:focus { border-color: var(--primary-blue); }
 
-        .address-box {
-            background: #020617; padding: 15px; border-radius: 10px;
-            font-family: monospace; font-size: 0.8rem; word-break: break-all;
+        /* বটম শিট পপআপ স্টাইল */
+        .bottom-sheet {
+            display: none; position: absolute; bottom: 0; left: 0; right: 0;
+            background: #ffffff; border-radius: 24px 24px 0 0;
+            padding: 20px; box-shadow: 0 -10px 25px rgba(0,0,0,0.15);
+            z-index: 110; text-align: left; max-height: 80vh; overflow-y: auto;
+        }
+
+        .sheet-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px;
+            border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s;
+        }
+        .sheet-item:hover { background: #f1f5f9; }
+
+        /* স্পিনার বা লোডিং অ্যানিমেশন */
+        .spinner {
+            width: 24px; height: 24px; border: 3px solid #e2e8f0;
+            border-top-color: #000; border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin: 0 auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* কপি ও ফুল কিউআর বক্স */
+        .crypto-box {
+            background: #f8fafc; padding: 14px; border-radius: 12px;
             display: flex; align-items: center; justify-content: space-between;
-            border: 1px dashed var(--primary-blue); margin-top: 10px;
+            font-family: monospace; font-size: 0.85rem; border: 1px solid #e2e8f0; text-align: left;
         }
 
-        .copy-icon { width: 20px; height: 20px; cursor: pointer; fill: var(--primary-blue); }
-        
-        .qr-box {
-            margin: 15px auto; width: 140px; height: 140px;
-            background: white; padding: 8px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
+        /* ভিডিওর নিচের সোশ্যাল আইকন বাটন */
+        .footer-social-btn {
+            width: 40px; height: 40px; background: #000000; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: #ffffff; transition: 0.3s;
         }
-        
+        .footer-social-btn:hover { transform: scale(1.1); }
+
         .logo-icon { width: 20px; height: 20px; fill: currentColor; }
-
-        .swal2-toast-custom {
-            background: #0f172a !important; border: 1px solid #3b82f6 !important; color: #ffffff !important;
+        
+        /* কাস্টম সুইট অ্যালার্ট ডার্ক টোস্ট */
+        .swal2-toast-success {
+            background: #1e293b !important; color: #ffffff !important; border-left: 4px solid #22c55e !important;
         }
     </style>
 </head>
@@ -148,118 +160,207 @@
 
     <div id="walletModal" class="modal">
         <div class="modal-content">
-            <h2 class="step-title">WALLET SELECTOR</h2>
+            <button onclick="closeWallet()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">✕</button>
             
-            <select id="assetDropdown" class="custom-select" onchange="onAssetChange()">
-                <option value="" disabled selected>Select Asset</option>
-                <option value="USDT">USDT</option>
-                <option value="LTC">LTC (Litecoin)</option>
-            </select>
-
-            <select id="networkDropdown" class="custom-select" onchange="onNetworkChange()" disabled>
-                <option value="" disabled selected>Select Network</option>
-            </select>
-
-            <div id="displayArea" style="display: none;">
-                <div class="qr-box">
-                    <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
+            <div id="mainForm">
+                <h2 class="text-xl font-bold mb-6 text-left">10 USD</h2>
+                
+                <label class="block text-left text-sm font-semibold text-gray-500 mb-1">Currency</label>
+                <div id="assetBtn" class="crypto-selector" onclick="openSheet('assetSheet')">
+                    <span id="selectedAsset">Select currency</span>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </div>
 
-                <div class="address-box">
-                    <span id="addrText">LOADING...</span>
-                    <svg class="copy-icon" onclick="copyAddr()" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                <label class="block text-left text-sm font-semibold text-gray-500 mb-1">Network</label>
+                <div id="networkBtn" class="crypto-selector opacity-50 cursor-not-allowed" style="pointer-events: none;">
+                    <span id="selectedNetwork">Select network</span>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </div>
+
+                <button id="proceedBtn" onclick="startLoading()" class="w-full bg-gray-200 text-gray-400 font-bold py-3 rounded-xl mt-4 transition duration-300" disabled style="cursor: not-allowed;">
+                    Proceed to the payment
+                </button>
+            </div>
+
+            <div id="loadingArea" style="display: none;" class="py-12">
+                <div class="spinner"></div>
+            </div>
+
+            <div id="detailsArea" style="display: none;" class="text-left animate-fade-in">
+                <h3 class="text-sm font-semibold text-gray-500 mb-1">Recipient's wallet address</h3>
+                <div class="crypto-box mb-4">
+                    <span id="addrText" class="text-gray-800 break-all pr-2">LOADING...</span>
+                    <div class="flex gap-2">
+                        <svg onclick="copyAddr()" class="w-5 h-5 text-blue-500 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+                        <svg onclick="viewQR()" class="w-5 h-5 text-gray-700 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m0 11v1m0-6h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                </div>
+
+                <h3 class="text-sm font-semibold text-gray-500 mb-1">Amount</h3>
+                <div class="crypto-box mb-6 font-bold text-gray-800">
+                    <span>10 USD</span>
                 </div>
             </div>
-            
-            <div style="margin-top: 25px; display: flex; justify-content: space-between;">
-                <button onclick="closeWallet()" style="color:#94a3b8; font-weight: 600;">Close</button>
-                <button onclick="closeWallet()" style="background:var(--primary-blue); padding:6px 20px; border-radius:50px; font-weight: 600;">DONE</button>
+
+            <div class="mt-6 pt-4 border-t border-gray-100 flex justify-center gap-4">
+                <a href="https://t.me/srsohan99ff" target="_blank" class="footer-social-btn">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-2.003 9.442c-.149.659-.539.822-1.091.511l-3.051-2.25-1.47 1.417c-.163.163-.299.299-.614.299l.219-3.102 5.645-5.099c.245-.218-.054-.339-.379-.122l-6.979 4.394-3.006-.941c-.654-.204-.667-.654.137-.967l11.741-4.524c.544-.204 1.02.122.861.841z"/></svg>
+                </a>
+                <a href="mailto:your_email@gmail.com" class="footer-social-btn">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L22 8m-9 11h.01M21 16V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2h14a2 2 0 002-2z"/></svg>
+                </a>
             </div>
+
+            <div id="assetSheet" class="bottom-sheet">
+                <h3 class="text-gray-400 font-bold mb-4">Currency</h3>
+                <div class="sheet-item" onclick="selectAsset('USDT', 'https://cryptologos.cc/logos/tether-usdt-logo.png')">
+                    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" class="w-6 h-6" alt="USDT"> USDT
+                </div>
+                <div class="sheet-item" onclick="selectAsset('LTC', 'https://cryptologos.cc/logos/litecoin-ltc-logo.png')">
+                    <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.png" class="w-6 h-6" alt="LTC"> LTC
+                </div>
+            </div>
+
+            <div id="networkSheet" class="bottom-sheet">
+                <h3 class="text-gray-400 font-bold mb-4">Select network</h3>
+                <div id="networkOptions"></div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // ওয়ালেট ডেটাবেস
+        // তোমার ক্রিপ্টো ওয়ালেট ডাটাবেস
         const walletData = {
             USDT: [
-                { name: "TRC20", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" },
-                { name: "BEP20 (BSC)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" }
+                { name: "BSC (BEP-20)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" },
+                { name: "TRON (TRC-20)", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" }
             ],
             LTC: [
                 { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK" }
             ]
         };
 
-        function openWallet() {
-            document.getElementById('walletModal').style.display = 'flex';
-            resetWalletModal();
+        let pickedAsset = "";
+        let pickedAddress = "";
+        let pickedQR = "";
+
+        function openWallet() { 
+            document.getElementById('walletModal').style.display = 'flex'; 
+            resetForm();
+        }
+        function closeWallet() { 
+            document.getElementById('walletModal').style.display = 'none'; 
+            closeAllSheets();
         }
 
-        function closeWallet() {
-            document.getElementById('walletModal').style.display = 'none';
+        function openSheet(id) {
+            closeAllSheets();
+            document.getElementById(id).style.display = 'block';
+        }
+        function closeAllSheets() {
+            document.querySelectorAll('.bottom-sheet').forEach(s => s.style.display = 'none');
         }
 
-        // মডাল খোলার সময় সবকিছু একদম শুরুতে ফিরিয়ে নেওয়া
-        function resetWalletModal() {
-            document.getElementById('assetDropdown').selectedIndex = 0;
-            
-            const netDropdown = document.getElementById('networkDropdown');
-            netDropdown.innerHTML = '<option value="" disabled selected>Select Network</option>';
-            netDropdown.disabled = true;
-            
-            document.getElementById('displayArea').style.display = 'none';
-        }
+        // কারেন্সি চুজ করা
+        function selectAsset(asset, logoUrl) {
+            pickedAsset = asset;
+            document.getElementById('selectedAsset').innerHTML = `<img src="${logoUrl}" class="w-5 h-5 inline mr-2"> ${asset}`;
+            closeAllSheets();
 
-        // কারেন্সি পরিবর্তন হলে কাজ
-        function onAssetChange() {
-            const asset = document.getElementById('assetDropdown').value;
-            const netDropdown = document.getElementById('networkDropdown');
-            
-            // নেটওয়ার্ক ড্রপডাউন রিসেট ও সচল (Enable) করা
-            netDropdown.innerHTML = '<option value="" disabled selected>Select Network</option>';
-            netDropdown.disabled = false;
-            
-            // সিলেক্ট করা কারেন্সির নেটওয়ার্কগুলো ড্রপডাউনে লোড করা
-            walletData[asset].forEach((net, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.innerText = net.name;
-                netDropdown.appendChild(option);
+            // নেটওয়ার্ক বাটন সচল করা
+            const netBtn = document.getElementById('networkBtn');
+            netBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            netBtn.style.pointerEvents = 'auto';
+            document.getElementById('selectedNetwork').innerText = "Select network";
+
+            // নেটওয়ার্ক অপশনগুলো ডাইনামিক লোড করা
+            const netOptionsBox = document.getElementById('networkOptions');
+            netOptionsBox.innerHTML = "";
+            walletData[asset].forEach(net => {
+                const div = document.createElement('div');
+                div.className = "sheet-item";
+                div.innerText = net.name;
+                div.onclick = function() { selectNetwork(net.name, net.address, net.qr); };
+                netOptionsBox.appendChild(div);
             });
 
-            // অ্যাড্রেস এরিয়া হাইড রাখা যতক্ষণ না নেটওয়ার্ক সিলেক্ট হচ্ছে
-            document.getElementById('displayArea').style.display = 'none';
+            // প্রোসিড বাটন ডিজেবল রাখা
+            disableProceedBtn();
         }
 
-        // নেটওয়ার্ক পরিবর্তন হলে কাজ
-        function onNetworkChange() {
-            const asset = document.getElementById('assetDropdown').value;
-            const selectedIndex = document.getElementById('networkDropdown').value;
-            const netInfo = walletData[asset][selectedIndex];
-            
-            // তথ্যগুলো বসানো
-            document.getElementById('addrText').innerText = netInfo.address;
-            document.getElementById('qrImage').src = netInfo.qr;
-            
-            // নেটওয়ার্ক সিলেক্ট করার পর পুরো বক্সটি একসাথে শো (Show) হবে
-            document.getElementById('displayArea').style.display = 'block';
+        // নেটওয়ার্ক চুজ করা
+        function selectNetwork(name, addr, qrLink) {
+            document.getElementById('selectedNetwork').innerText = name;
+            pickedAddress = addr;
+            pickedQR = qrLink;
+            closeAllSheets();
+
+            // প্রোসিড বাটন অন করা (ভিডিওর মতো ব্ল্যাক স্টাইল)
+            const proceedBtn = document.getElementById('proceedBtn');
+            proceedBtn.disabled = false;
+            proceedBtn.style.cursor = 'pointer';
+            proceedBtn.classList.remove('bg-gray-200', 'text-gray-400');
+            proceedBtn.classList.add('bg-black', 'text-white');
         }
 
+        function disableProceedBtn() {
+            const proceedBtn = document.getElementById('proceedBtn');
+            proceedBtn.disabled = true;
+            proceedBtn.style.cursor = 'not-allowed';
+            proceedBtn.classList.add('bg-gray-200', 'text-gray-400');
+            proceedBtn.classList.remove('bg-black', 'text-white');
+        }
+
+        // ভিডিওর মতো ৩ সেকেন্ড লোডিং স্পিনার চলা
+        function startLoading() {
+            document.getElementById('mainForm').style.display = 'none';
+            document.getElementById('loadingArea').style.display = 'block';
+
+            setTimeout(() => {
+                document.getElementById('loadingArea').style.display = 'none';
+                document.getElementById('addrText').innerText = pickedAddress;
+                document.getElementById('detailsArea').style.display = 'block';
+            }, 1500); // ১.৫ সেকেন্ড লোড হবে
+        }
+
+        // সুইট পপআপ দিয়ে অ্যাড্রেস কপি করা
         function copyAddr() {
-            const text = document.getElementById('addrText').innerText;
-            navigator.clipboard.writeText(text);
-            
-            // SweetAlert2 টপ নোটিফিকেশন
+            navigator.clipboard.writeText(pickedAddress);
             Swal.fire({
                 toast: true,
                 position: 'top',
                 icon: 'success',
-                title: 'Address Copied!',
+                title: 'Address was copied',
                 showConfirmButton: false,
                 timer: 2000,
                 timerProgressBar: true,
-                customClass: { popup: 'swal2-toast-custom' }
+                customClass: { popup: 'swal2-toast-success' }
             });
+        }
+
+        // আলাদাভাবে কিউআর কোড ভিউ করার চমৎকার পপআপ
+        function viewQR() {
+            Swal.fire({
+                title: 'Scan to send payment',
+                imageUrl: pickedQR,
+                imageWidth: 200,
+                imageHeight: 200,
+                imageAlt: 'QR Code',
+                confirmButtonText: 'Close',
+                confirmButtonColor: '#000000'
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('mainForm').style.display = 'block';
+            document.getElementById('detailsArea').style.display = 'none';
+            document.getElementById('loadingArea').style.display = 'none';
+            document.getElementById('selectedAsset').innerText = "Select currency";
+            document.getElementById('selectedNetwork').innerText = "Select network";
+            document.getElementById('networkBtn').style.pointerEvents = 'none';
+            document.getElementById('networkBtn').classList.add('opacity-50', 'cursor-not-allowed');
+            disableProceedBtn();
         }
     </script>
 </body>
