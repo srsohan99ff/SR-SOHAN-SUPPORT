@@ -110,7 +110,7 @@
         
         /* লোগো ইমেজ স্টাইল */
         .crypto-logo-img {
-            width: 24px; height: 24px; border-radius: 50%; object-fit: cover;
+            width: 24px; height: 24px; border-radius: 50%; object-fit: cover; display: inline-block;
         }
 
         .info-tag {
@@ -119,7 +119,7 @@
             display: inline-flex; align-items: center; gap: 6px; font-size: 0.9rem; margin-bottom: 20px;
         }
 
-        /* লক/অফ এবং লাইভ জ্বলে ওঠা বাটন */
+        /* লক/অফ এবং লাইভ বাটন */
         .proceed-btn-style {
             padding: 14px 20px; border-radius: 12px; font-weight: 700; color: #64748b; 
             width: 54%; display: flex; align-items: center; justify-content: center;
@@ -255,7 +255,7 @@
                         <div class="copy-field" style="margin-top: 6px;">
                             <span id="addrText" style="width: 75%;">LOADING...</span>
                             <span class="inline-copy-btn" onclick="copyText('addrText')">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1 2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                                 Copy
                             </span>
                         </div>
@@ -285,10 +285,10 @@
             ]
         };
 
-        // ক্রিপ্টোমাসের ডিরেক্ট অফিশিয়াল ইমেজ লিঙ্ক (যা ব্রাউজারে ১০০% শো করবে)
+        // ওরিজিনাল ক্রিপ্টোমাস স্টাইল লোগো (Base64 ডাটা কোড - ১০০% অফলাইন ও ব্রাউজার ফ্রেন্ডলি)
         const logos = {
-            USDT: `<img src="https://cryptomus.com/img/currencies/USDT.svg" class="crypto-logo-img" alt="USDT">`,
-            LTC: `<img src="https://cryptomus.com/img/currencies/LTC.svg" class="crypto-logo-img" alt="LTC">`
+            USDT: `<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='24' height='24'><circle cx='16' cy='16' r='16' fill='%231ba27a'/><path d='M16 6c.3 0 .5.1.7.3l4 4c.4.4.4 1 0 1.4s-1 .4-1.4 0L17 9.4V19c0 .6-.4 1-1 1s-1-.4-1-1V9.4l-2.3 2.3c-.4.4-1 .4-1.4 0s-.4-1 0-1.4l4-4c.2-.2.4-.3.7-.3zM9 22c0-.6.4-1 1-1h12c.6 0 1 .4 1 1s-.4 1-1 1H10c-.6 0-1-.4-1-1z' fill='%23fff'/></svg>" class="crypto-logo-img" alt="USDT">`,
+            LTC: `<img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='24' height='24'><circle cx='16' cy='16' r='16' fill='%232d4f7c'/><path d='M18.6 8.4l-1.3 4.9-2.7 1 .8-3.1h-2.5l-2.1 7.8-.8 3.2h10.5l-.9 3.4H9.7l2.9-11.1-2.4.9-.8 3.1H7l.8-3.1 2.8-1 1-3.4h2.5l-.9 3.4 5.8-2.1.8-3z' fill='%23fff'/></svg>" class="crypto-logo-img" alt="LTC">`
         };
 
         let selectedAsset = "";
@@ -421,7 +421,7 @@
             closeBtn.disabled = true;
             closeBtn.style.opacity = "0.3";
             
-            // শর্ত মেনে টেক্সট উধাও হবে এবং শুধু লোডার স্পিন করবে
+            // টেক্সট রিমুভ হয়ে শুধুমাত্র লোডার ঘুরবে
             btnText.innerText = ""; 
             loader.style.display = 'block';
             
