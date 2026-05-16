@@ -10,7 +10,7 @@
         :root {
             --primary-blue: #3b82f6;
             --dark-bg: #020617;
-            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
@@ -25,206 +25,159 @@
             padding: 20px;
             font-family: 'Rajdhani', sans-serif;
             color: #f9fafb;
-            overflow-x: hidden;
         }
         
-        .main-container {
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-            z-index: 10;
-        }
-
-        .main-logo-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 25px;
-        }
+        .main-container { width: 100%; max-width: 400px; text-align: center; }
 
         .main-logo {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            overflow: hidden;
+            width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 20px;
             border: 3px solid var(--primary-blue);
             box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
-            position: relative;
-            z-index: 2;
-        }
-        
-        .main-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .logo-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 150px;
-            height: 150px;
-            background: var(--primary-blue);
-            filter: blur(40px);
-            opacity: 0.3;
-            border-radius: 50%;
         }
 
         .stylish-name {
-            font-family: 'Syncopate', sans-serif;
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 4px;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            font-family: 'Syncopate', sans-serif; font-size: 1.6rem; letter-spacing: 4px; margin-bottom: 25px;
         }
 
-        .dev-tag {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            background: var(--glass-bg);
-            padding: 6px 18px;
-            border-radius: 50px;
-            margin-bottom: 35px;
-            display: inline-block;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-            letter-spacing: 1px;
-        }
-
-        .btn-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .row-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+        .btn-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
 
         .contact-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            border-radius: 12px;
-            color: white;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            padding: 15px; border-radius: 12px; color: white; font-weight: 700;
+            text-decoration: none; transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .btn-icon {
-            width: 18px;
-            height: 18px;
-            margin-right: 10px;
-            fill: currentColor;
-        }
-
-        /* সাবজেক্ট বাটন - ব্লু গ্রেডিয়েন্ট */
-        .subject-btn {
-            background: linear-gradient(90deg, #1e293b, #334155);
-        }
-
-        /* স্পেশাল ব্লু থিম বাটন */
-        .full-width-blue {
-            background: linear-gradient(90deg, #2563eb, #1d4ed8);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-            grid-column: span 2;
-        }
-
-        /* সোশাল মিডিয়া বাটন */
         .facebook { background: #1877F2; }
+        .row-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .whatsapp { background: #075E54; }
         .telegram { background: #0088cc; }
-
-        .contact-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
-            border-color: rgba(255, 255, 255, 0.4);
+        
+        .wallet-btn {
+            background: linear-gradient(90deg, #6366f1, #3b82f6);
+            cursor: pointer; width: 100%; margin-top: 5px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
-        /* পপআপ স্টাইল */
-        #contactPopup {
-            display: flex;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(2, 6, 23, 0.9);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(8px);
+        .modal {
+            display: none; position: fixed; inset: 0; 
+            background: rgba(2, 6, 23, 0.95); z-index: 100;
+            align-items: center; justify-content: center; backdrop-filter: blur(10px);
         }
 
-        .popup-content {
-            background: #0f172a;
-            padding: 35px 25px;
-            border-radius: 24px;
+        .modal-content {
+            background: #0f172a; width: 90%; max-width: 320px;
+            padding: 25px; border-radius: 20px; border: 1px solid var(--primary-blue);
             text-align: center;
-            max-width: 300px;
-            border: 1px solid var(--primary-blue);
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .step-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; color: #fff; }
+
+        .option-card {
+            background: var(--glass-bg); padding: 12px; border-radius: 10px;
+            margin-bottom: 10px; cursor: pointer; border: 1px solid var(--glass-border);
+            transition: 0.2s;
+        }
+
+        .option-card:hover { border-color: var(--primary-blue); background: rgba(59, 130, 246, 0.1); }
+
+        .address-box {
+            background: #020617; padding: 15px; border-radius: 10px;
+            font-family: monospace; font-size: 0.8rem; word-break: break-all;
+            display: flex; align-items: center; justify-content: space-between;
+            border: 1px dashed var(--primary-blue); margin-top: 10px;
+        }
+
+        .copy-icon { width: 20px; height: 20px; cursor: pointer; fill: var(--primary-blue); }
+        
+        /* কিউআর কোড বক্স */
+        .qr-box {
+            margin: 15px auto 5px; width: 140px; height: 140px;
+            background: white; padding: 8px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
         }
     </style>
 </head>
 <body>
 
     <div class="main-container">
-        <div class="main-logo-wrapper">
-            <div class="logo-glow"></div>
-            <div class="main-logo">
-                <img src="https://i.ibb.co.com/Y409z5jC/logo.png" alt="SR SOHAN">
-            </div>
+        <div class="main-logo">
+            <img src="https://i.ibb.co.com/Y409z5jC/logo.png" style="width:100%; height:100%; border-radius:50%;" alt="SR SOHAN">
         </div>
 
         <h1 class="stylish-name">ᏚR SOHAN</h1>
-        <div class="dev-tag">Geography History and Civics Short Question</div>
 
-        
+        <div class="btn-container">
+            <a href="https://www.facebook.com/srsohan99ff" class="contact-btn facebook" target="_blank">FACEBOOK</a>
 
             <div class="row-grid">
-                <a href="https://www.facebook.com/srsohan99ff" class="contact-btn facebook" target="_blank">
-                    <svg class="btn-icon" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    FACEBOOK
-                </a>
-
-                <a href="https://wa.me/8801329365319" class="contact-btn whatsapp" target="_blank">
-                    <svg class="btn-icon" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.917-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                    WHATSAPP
-                </a>
+                <a href="https://wa.me/8801329365319" class="contact-btn whatsapp" target="_blank">WHATSAPP</a>
+                <a href="https://t.me/srsohan99ff" class="contact-btn telegram" target="_blank">TELEGRAM</a>
             </div>
 
-            <a href="https://t.me/srsohan99ff" class="contact-btn telegram" style="grid-column: span 2;" target="_blank">
-                <svg class="btn-icon" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.891 8.146l-2.003 9.442c-.149.659-.539.822-1.091.511l-3.051-2.25-1.47 1.417c-.163.163-.299.299-.614.299l.219-3.102 5.645-5.099c.245-.218-.054-.339-.379-.122l-6.979 4.394-3.006-.941c-.654-.204-.667-.654.137-.967l11.741-4.524c.544-.204 1.02.122.861.841z"/></svg>
-                TELEGRAM
-            </a>
+            <div onclick="openWallet()" class="contact-btn wallet-btn">
+                <svg style="width:20px; margin-right:10px;" viewBox="0 0 24 24" fill="white"><path d="M21 18v1c0 1.105-.895 2-2 2H5c-1.105 0-2-.895-2-2V5c0-1.105.895-2 2-2h14c1.105 0 2 .895 2 2v1h-9c-1.105 0-2 .895-2 2v8c0 1.105.895 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5z"/></svg>
+                WALLET ADDRESS
+            </div>
         </div>
     </div>
 
-    <div id="contactPopup">
-        <div class="popup-content">
-            <h2 style="font-family: 'Syncopate', sans-serif; color: #fff; font-size: 16px; margin-bottom: 15px; letter-spacing: 1px;">WELCOME</h2>
-            <p style="color: #94a3b8; font-size: 15px; line-height: 1.5; margin-bottom: 25px;">
-                যেকোনো সাহায্যের জন্য FACEBOOK, WHATSAPP কিংবা TELEGRAM এ যোগাযোগ করুন।
-            </p>
-            <button onclick="document.getElementById('contactPopup').style.display='none'" style="background: var(--primary-blue); color: white; border: none; padding: 10px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);">
-                OKAY
-            </button>
+    <div id="walletModal" class="modal">
+        <div class="modal-content">
+            <div id="step1">
+                <h2 class="step-title">SELECT ASSET</h2>
+                <div class="option-card" onclick="showStep(2)">USDT</div>
+                <div class="option-card" onclick="showAddress('LTC', 'YOUR_LTC_ADDRESS', 'YOUR_LTC_QR_LINK')">LTC (Litecoin)</div>
+                <button onclick="closeWallet()" style="margin-top:10px; color:#94a3b8;">Close</button>
+            </div>
+
+            <div id="step2" style="display:none;">
+                <h2 class="step-title">SELECT NETWORK</h2>
+                <div class="option-card" onclick="showAddress('USDT (TRC20)', 'YOUR_USDT_TRC20_ADDRESS', 'YOUR_USDT_QR_LINK')">TRC20</div>
+                <button onclick="showStep(1)" style="margin-top:10px; color:#94a3b8;">Back</button>
+            </div>
+
+            <div id="finalStep" style="display:none;">
+                <h2 class="step-title" id="networkTitle">ADDRESS</h2>
+                
+                <div class="qr-box">
+                    <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+
+                <div class="address-box">
+                    <span id="addrText">LOADING...</span>
+                    <svg class="copy-icon" onclick="copyAddr()" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                </div>
+                <p id="copyMsg" style="color: #25D366; font-size: 12px; margin-top: 10px; display: none;">Copied to clipboard!</p>
+                
+                <button onclick="closeWallet()" style="margin-top:20px; background:var(--primary-blue); padding:8px 25px; border-radius:50px;">DONE</button>
+            </div>
         </div>
     </div>
-    
+
+    <script>
+        function openWallet() { document.getElementById('walletModal').style.display = 'flex'; showStep(1); }
+        function closeWallet() { document.getElementById('walletModal').style.display = 'none'; }
+
+        function showStep(step) {
+            document.getElementById('step1').style.display = step === 1 ? 'block' : 'none';
+            document.getElementById('step2').style.display = step === 2 ? 'block' : 'none';
+            document.getElementById('finalStep').style.display = step === 3 ? 'block' : 'none';
+        }
+
+        function showAddress(network, address, qrUrl) {
+            document.getElementById('networkTitle').innerText = network + " DETAILS";
+            document.getElementById('addrText').innerText = address;
+            document.getElementById('qrImage').src = qrUrl; // কিউআর ইমেজ সেট করা হচ্ছে
+            showStep(3);
+        }
+
+        function copyAddr() {
+            const text = document.getElementById('addrText').innerText;
+            navigator.clipboard.writeText(text);
+            const msg = document.getElementById('copyMsg');
+            msg.style.display = 'block';
+            setTimeout(() => { msg.style.display = 'none'; }, 2000);
+        }
+    </script>
 </body>
 </html>
