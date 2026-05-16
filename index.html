@@ -73,17 +73,8 @@
 
         .step-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; color: #fff; }
 
-        .option-card {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            background: var(--glass-bg); padding: 12px; border-radius: 10px;
-            margin-bottom: 10px; cursor: pointer; border: 1px solid var(--glass-border);
-            transition: 0.2s; font-weight: 600;
-        }
-
-        .option-card:hover { border-color: var(--primary-blue); background: rgba(59, 130, 246, 0.1); }
-
-        /* নেটওয়ার্ক ড্রপডাউন সিলেক্টর স্টাইল */
-        .network-select {
+        /* থিমের সাথে ম্যাচিং ডার্ক ড্রপডাউন সিলেক্টর */
+        .custom-select {
             width: 100%; background: #020617; color: #fff;
             padding: 12px; border-radius: 10px; border: 1px solid var(--glass-border);
             outline: none; font-weight: 600; font-family: 'Rajdhani', sans-serif;
@@ -91,8 +82,14 @@
             background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
             background-repeat: no-repeat; background-position: right 10px center;
             -webkit-appearance: none; -moz-appearance: none; appearance: none;
+            transition: 0.2s;
         }
-        .network-select:focus { border-color: var(--primary-blue); }
+        /* ড্রপডাউনের ভেতরের অপশনগুলোর ব্যাকগ্রাউন্ড কালো করা */
+        .custom-select option {
+            background: #0f172a;
+            color: #fff;
+        }
+        .custom-select:focus { border-color: var(--primary-blue); }
 
         .address-box {
             background: #020617; padding: 15px; border-radius: 10px;
@@ -104,7 +101,7 @@
         .copy-icon { width: 20px; height: 20px; cursor: pointer; fill: var(--primary-blue); }
         
         .qr-box {
-            margin: 0 auto 15px; width: 140px; height: 140px;
+            margin: 15px auto; width: 140px; height: 140px;
             background: white; padding: 8px; border-radius: 10px;
             display: flex; align-items: center; justify-content: center;
         }
@@ -151,28 +148,19 @@
 
     <div id="walletModal" class="modal">
         <div class="modal-content">
-            <div id="step1">
-                <h2 class="step-title">SELECT ASSET</h2>
-                
-                <div class="option-card" onclick="openAsset('USDT')">
-                    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" style="width:20px; height:20px;" alt="USDT">
-                    USDT
-                </div>
-                
-                <div class="option-card" onclick="openAsset('LTC')">
-                    <img src="https://cryptologos.cc/logos/litecoin-ltc-logo.png" style="width:20px; height:20px;" alt="LTC">
-                    LTC (Litecoin)
-                </div>
-                
-                <button onclick="closeWallet()" style="margin-top:10px; color:#94a3b8;">Close</button>
-            </div>
+            <h2 class="step-title">WALLET SELECTOR</h2>
+            
+            <select id="assetDropdown" class="custom-select" onchange="onAssetChange()">
+                <option value="" disabled selected>Select Asset</option>
+                <option value="USDT">USDT</option>
+                <option value="LTC">LTC (Litecoin)</option>
+            </select>
 
-            <div id="assetDetailsPage" style="display:none;">
-                <h2 class="step-title" id="assetTitle">ASSET DETAILS</h2>
-                
-                <select id="networkDropdown" class="network-select" onchange="onNetworkChange()">
-                    </select>
+            <select id="networkDropdown" class="custom-select" onchange="onNetworkChange()" disabled>
+                <option value="" disabled selected>Select Network</option>
+            </select>
 
+            <div id="displayArea" style="display: none;">
                 <div class="qr-box">
                     <img id="qrImage" src="" alt="QR Code" style="width: 100%; height: 100%; object-fit: contain;">
                 </div>
@@ -181,77 +169,87 @@
                     <span id="addrText">LOADING...</span>
                     <svg class="copy-icon" onclick="copyAddr()" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
                 </div>
-                
-                <div style="margin-top: 25px; display: flex; justify-content: space-between;">
-                    <button onclick="showStep(1)" style="color:#94a3b8; font-weight: 600;">Back</button>
-                    <button onclick="closeWallet()" style="background:var(--primary-blue); padding:6px 20px; border-radius:50px; font-weight: 600;">DONE</button>
-                </div>
+            </div>
+            
+            <div style="margin-top: 25px; display: flex; justify-content: space-between;">
+                <button onclick="closeWallet()" style="color:#94a3b8; font-weight: 600;">Close</button>
+                <button onclick="closeWallet()" style="background:var(--primary-blue); padding:6px 20px; border-radius:50px; font-weight: 600;">DONE</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ওয়ালেট ডাটাবেস (এখানে তোমার অ্যাড্রেস এবং কিউআর ইমেজের লিংক বসাবে)
+        // ওয়ালেট ডেটাবেস
         const walletData = {
-            USDT: {
-                networks: [
-                    { name: "TRC20", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" },
-                    { name: "BEP20 (BSC)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" }
-                ]
-            },
-            LTC: {
-                networks: [
-                    { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK" }
-                ]
-            }
+            USDT: [
+                { name: "TRC20", address: "YOUR_USDT_TRC20_ADDRESS", qr: "YOUR_USDT_TRC20_QR_LINK" },
+                { name: "BEP20 (BSC)", address: "YOUR_USDT_BEP20_ADDRESS", qr: "YOUR_USDT_BEP20_QR_LINK" }
+            ],
+            LTC: [
+                { name: "Litecoin Network", address: "YOUR_LTC_ADDRESS", qr: "YOUR_LTC_QR_LINK" }
+            ]
         };
 
-        let currentAsset = "";
-
-        function openWallet() { document.getElementById('walletModal').style.display = 'flex'; showStep(1); }
-        function closeWallet() { document.getElementById('walletModal').style.display = 'none'; }
-
-        function showStep(step) {
-            document.getElementById('step1').style.display = step === 1 ? 'block' : 'none';
-            document.getElementById('assetDetailsPage').style.display = step === 2 ? 'block' : 'none';
+        function openWallet() {
+            document.getElementById('walletModal').style.display = 'flex';
+            resetWalletModal();
         }
 
-        function openAsset(asset) {
-            currentAsset = asset;
-            document.getElementById('assetTitle').innerText = asset + " WALLET";
+        function closeWallet() {
+            document.getElementById('walletModal').style.display = 'none';
+        }
+
+        // মডাল খোলার সময় সবকিছু একদম শুরুতে ফিরিয়ে নেওয়া
+        function resetWalletModal() {
+            document.getElementById('assetDropdown').selectedIndex = 0;
             
-            const dropdown = document.getElementById('networkDropdown');
-            dropdown.innerHTML = ""; // আগের অপশন ক্লিন করা
+            const netDropdown = document.getElementById('networkDropdown');
+            netDropdown.innerHTML = '<option value="" disabled selected>Select Network</option>';
+            netDropdown.disabled = true;
             
-            // ড্রপডাউনে নেটওয়ার্কগুলো যোগ করা
-            walletData[asset].networks.forEach((net, index) => {
+            document.getElementById('displayArea').style.display = 'none';
+        }
+
+        // কারেন্সি পরিবর্তন হলে কাজ
+        function onAssetChange() {
+            const asset = document.getElementById('assetDropdown').value;
+            const netDropdown = document.getElementById('networkDropdown');
+            
+            // নেটওয়ার্ক ড্রপডাউন রিসেট ও সচল (Enable) করা
+            netDropdown.innerHTML = '<option value="" disabled selected>Select Network</option>';
+            netDropdown.disabled = false;
+            
+            // সিলেক্ট করা কারেন্সির নেটওয়ার্কগুলো ড্রপডাউনে লোড করা
+            walletData[asset].forEach((net, index) => {
                 const option = document.createElement('option');
                 option.value = index;
                 option.innerText = net.name;
-                dropdown.appendChild(option);
+                netDropdown.appendChild(option);
             });
 
-            // প্রথম নেটওয়ার্কটি ডিফল্ট হিসেবে দেখানো
-            updateWalletDetails(0);
-            showStep(2);
+            // অ্যাড্রেস এরিয়া হাইড রাখা যতক্ষণ না নেটওয়ার্ক সিলেক্ট হচ্ছে
+            document.getElementById('displayArea').style.display = 'none';
         }
 
+        // নেটওয়ার্ক পরিবর্তন হলে কাজ
         function onNetworkChange() {
+            const asset = document.getElementById('assetDropdown').value;
             const selectedIndex = document.getElementById('networkDropdown').value;
-            updateWalletDetails(selectedIndex);
-        }
-
-        function updateWalletDetails(index) {
-            const netInfo = walletData[currentAsset].networks[index];
+            const netInfo = walletData[asset][selectedIndex];
+            
+            // তথ্যগুলো বসানো
             document.getElementById('addrText').innerText = netInfo.address;
             document.getElementById('qrImage').src = netInfo.qr;
+            
+            // নেটওয়ার্ক সিলেক্ট করার পর পুরো বক্সটি একসাথে শো (Show) হবে
+            document.getElementById('displayArea').style.display = 'block';
         }
 
         function copyAddr() {
             const text = document.getElementById('addrText').innerText;
             navigator.clipboard.writeText(text);
             
-            // SweetAlert2 টপ পপআপ নোটিফিকেশন
+            // SweetAlert2 টপ নোটিফিকেশন
             Swal.fire({
                 toast: true,
                 position: 'top',
