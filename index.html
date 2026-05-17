@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ᏚR SOHAN - Official</title>
+    <title>𝐒ᴏʜᴀɴ 𝐒ᴜᴘᴘᴏʀᴛ - Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght=700&family=Rajdhani:wght=600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-blue: #2563eb;
-            --dark-bg: #020617;
+            --main-bg: #f8fafc; /* লাইট বা সাদাটে ব্যাকগ্রাউন্ড */
+            --card-bg: #ffffff;
+            --text-dark: #000000;
+            --border-color: #e2e8f0;
         }
 
         body {
-            background: radial-gradient(circle at top, #1e293b 0%, #020617 100%);
+            background-color: var(--main-bg);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -22,19 +25,33 @@
             margin: 0;
             padding: 20px;
             font-family: 'Rajdhani', sans-serif;
-            color: #f9fafb;
+            color: var(--text-dark);
         }
         
-        .main-container { width: 100%; max-width: 400px; text-align: center; }
+        .main-container { 
+            width: 100%; 
+            max-width: 400px; 
+            text-align: center; 
+            background: var(--card-bg);
+            padding: 30px 24px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
 
         .main-logo {
             width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 20px;
             border: 3px solid var(--primary-blue);
-            box-shadow: 0 0 25px rgba(37, 99, 235, 0.5);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
         }
 
         .stylish-name {
-            font-family: 'Syncopate', sans-serif; font-size: 1.6rem; letter-spacing: 4px; margin-bottom: 25px;
+            font-family: 'Syncopate', sans-serif; 
+            font-size: 1.5rem; 
+            letter-spacing: 2px; 
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            font-weight: 700;
         }
 
         .btn-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
@@ -42,7 +59,13 @@
         .contact-btn {
             display: flex; align-items: center; justify-content: center;
             padding: 15px; border-radius: 12px; color: white; font-weight: 700;
-            text-decoration: none; transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none; transition: all 0.3s ease; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
         .facebook { background: #1877F2; }
@@ -55,10 +78,10 @@
 
     <div class="main-container">
         <div class="main-logo">
-            <img src="https://i.ibb.co.com/Y409z5jC/logo.png" style="width:100%; height:100%; border-radius:50%;" alt="SR SOHAN">
+            <img src="https://i.ibb.co.com/Y409z5jC/logo.png" style="width:100%; height:100%; border-radius:50%; object-fit: cover;" alt="SR SOHAN">
         </div>
 
-        <h1 class="stylish-name">ᏚR SOHAN</h1>
+        <h1 class="stylish-name">𝐒ᴏʜᴀɴ 𝐏ᴇᴍᴇɴᴛ</h1>
 
         <div class="btn-container">
             <a href="https://www.facebook.com/srsohan99ff" class="contact-btn facebook" target="_blank">
